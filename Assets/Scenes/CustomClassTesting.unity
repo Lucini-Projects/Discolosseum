@@ -390,7 +390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 6819670184418248866, guid: fc93c78145add4c4a8382b6b98b768f7, type: 3}
-  dispersion: 0
+  dispersion: 10
+  cardCount: 6
 --- !u!4 &772824525
 Transform:
   m_ObjectHideFlags: 0
@@ -434,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55998988f018abe40b227638afeb6b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deckSize: 0
   deckOfCards:
   - name: Card 1
     className: 
@@ -460,6 +462,7 @@ MonoBehaviour:
     energyCost: 0
     attack: 0
     defense: 0
+  deck: []
 --- !u!4 &792115865
 Transform:
   m_ObjectHideFlags: 0
@@ -949,7 +952,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7609576125166921302, guid: fc93c78145add4c4a8382b6b98b768f7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609576125166921302, guid: fc93c78145add4c4a8382b6b98b768f7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.09
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc93c78145add4c4a8382b6b98b768f7, type: 3}

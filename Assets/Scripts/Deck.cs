@@ -7,7 +7,7 @@ public class Deck : MonoBehaviour
     public int deckSize;
 
     [SerializeField] private Card[] deckOfCards = null;
-    public List<Card> deck = new List<Card>();
+    //public List<Card> deck = new List<Card>();
     private Card temporary;
 
     void Start()
