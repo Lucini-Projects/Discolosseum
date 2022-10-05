@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Display
   - GameManager
+  - RoundNumber
+  - EnergyPool
+  - Player1Health
+  - Bounds
   layers:
   - Default
   - TransparentFX

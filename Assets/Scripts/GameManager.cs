@@ -5,23 +5,7 @@ using UnityEngine.UI;
 
 public enum GameState
 {
-    MainMenu, OpenGameState, PauseMenu, EndCredits
-}
-
-//These can be more figured out as we go, and the number can change.
-public enum Decision1
-{
-    Choice1, Choice2, Choice3
-}
-
-public enum Decision2
-{
-    Choice1, Choice2, Choice3
-}
-
-public enum Decision3
-{
-    Choice1, Choice2, Choice3
+    GameStart, Player1Turn, Player2Turn, EndRound, GameEnd
 }
 
 public delegate void StateChange();
@@ -29,9 +13,11 @@ public delegate void StateChange();
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> player1Deck = new List<GameObject>();
-    public static Decision1 decision1;
-    public static Decision2 decision2;
-    public static Decision3 decision3;
+    public static bool player1Turn;
+    public static int player1Health;
+    public static int player2Health;
+    public static int energyPool;
+    public static int roundNumber;
 
     protected GameManager() { }
     private static GameManager instance = null;
@@ -69,44 +55,56 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        gameState = GameState.MainMenu;
+        gameState = GameState.GameStart;
     }
 
     void Update()
     {
-        /*
-        INSERT A BUNCH OF CODE THAT WILL GIVE CONDITIONS TO SWITCHING TO A DIFFERENT GAME STATE
-        */
-
-        //Main Game Loop based on game state
+        GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = roundNumber.ToString();
+        GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = player1Health.ToString();
+        GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = energyPool.ToString();
         switch (gameState)
         {
             default:
                 Debug.Log("This is a glitch. Fix it.");
                 break;
-            case GameState.MainMenu:
+            case GameState.GameStart:
+                Shuffle();
+                Draw4();
+                player1Health = 20;
+                player2Health = 20;
+                energyPool = 5;
+                roundNumber = 1;
+                gameState = GameState.Player1Turn;
+                Debug.Log("Switching GameState.");
                 break;
-            case GameState.OpenGameState:
+            case GameState.Player1Turn:
                 break;
-            case GameState.PauseMenu:
+            case GameState.Player2Turn:
                 break;
-            case GameState.EndCredits:
+            case GameState.EndRound:
+                break;
+            case GameState.GameEnd:
                 break;
         }
     }
 
-    public void SetDecision1(Decision1 firstChoice)
+    void Shuffle()
     {
-        decision1 = firstChoice;
+        for (int i = 0; i < player1Deck.Count; i++)
+        {
+            GameObject temp = player1Deck[i];
+            int randomIndex = Random.Range(i, player1Deck.Count);
+            player1Deck[i] = player1Deck[randomIndex];
+            player1Deck[randomIndex] = temp;
+        }
     }
 
-    public void SetDecision2(Decision2 secondChoice)
+    void Draw4()
     {
-        decision2 = secondChoice;
-    }
-
-    public void SetDecision3(Decision3 thirdChoice)
-    {
-        decision3 = thirdChoice;
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject newCard = Instantiate(player1Deck[i], new Vector2(-20 + i * 10, -14), Quaternion.identity);
+        }
     }
 }
