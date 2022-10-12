@@ -13,11 +13,17 @@ public delegate void StateChange();
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> player1Deck = new List<GameObject>();
+
+    public List<GameObject> player1Hand = new List<GameObject>();
+
     public static bool player1Turn;
     public static int player1Health;
     public static int player2Health;
     public static int energyPool;
     public static int roundNumber;
+
+    public GameObject P1TurnIndicator;
+    public GameObject P2TurnIndicator;
 
     protected GameManager() { }
     private static GameManager instance = null;
@@ -60,9 +66,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = roundNumber.ToString();
-        GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = player1Health.ToString();
-        GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = energyPool.ToString();
+        GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
+        GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
+
+        GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
+        GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + energyPool.ToString();
+
+        DistributeCardsinHand();
+
         switch (gameState)
         {
             default:
@@ -79,8 +90,12 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Switching GameState.");
                 break;
             case GameState.Player1Turn:
+                P1TurnIndicator.SetActive(true);
+                P2TurnIndicator.SetActive(false);
                 break;
             case GameState.Player2Turn:
+                P1TurnIndicator.SetActive(false);
+                P2TurnIndicator.SetActive(true);
                 break;
             case GameState.EndRound:
                 break;
@@ -105,6 +120,20 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             GameObject newCard = Instantiate(player1Deck[i], new Vector2(-20 + i * 10, -14), Quaternion.identity);
+            player1Hand.Add(newCard);
+            Debug.Log("Added " + player1Deck[i].GetComponent<Card>().cardName + " to hand.");
+        }
+    }
+
+    void DistributeCardsinHand()
+    {
+        if (player1Hand.Count != 0)
+        {
+            int spacing = 100 / player1Hand.Count;
+            for (int i = 0; i < player1Hand.Count; i++)
+            {
+                player1Hand[i].transform.position = new Vector2(spacing * (i-1),-14);
+            }
         }
     }
 }

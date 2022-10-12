@@ -10,6 +10,9 @@ TagManager:
   - EnergyPool
   - Player1Health
   - Bounds
+  - Player2Health
+  - Player2TurnIndicator
+  - Player1TurnIndicator
   layers:
   - Default
   - TransparentFX
