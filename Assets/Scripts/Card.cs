@@ -11,11 +11,15 @@ public class Card : MonoBehaviour
     public int attack;
     public int defense;
 
-    //When the mouse hovers over the GameObject, it turns to this color (red)
-    Color m_MouseOverColor = Color.red;
+    bool isPlayer1;
+    bool canPlay;
+    bool privateKnowledge;
+
+    Color notPlayable = Color.red;
+    Color playable = Color.green;
 
     //This stores the GameObject’s original color
-    Color m_OriginalColor;
+    Color originalColor;
 
     //Get the GameObject’s mesh renderer to access the GameObject’s material and color
     SpriteRenderer m_Renderer;
@@ -25,13 +29,19 @@ public class Card : MonoBehaviour
         //Fetch the mesh renderer component from the GameObject
         m_Renderer = GetComponent<SpriteRenderer>();
         //Fetch the original color of the GameObject
-        m_OriginalColor = m_Renderer.material.color;
+        originalColor = m_Renderer.material.color;
     }
 
     void OnMouseOver()
     {
-        // Change the color of the GameObject to red when the mouse is over GameObject
-        m_Renderer.material.color = m_MouseOverColor;
+        if (energyCost <= GameManager.currentEnergyPool)
+        {
+            m_Renderer.material.color = playable;
+        }
+        else
+        {
+            m_Renderer.material.color = notPlayable;
+        }
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Display").Length; i++)
         {
             GameObject.FindWithTag("Display").transform.GetChild(0).GetComponent<Text>().text = cardName;
@@ -45,6 +55,6 @@ public class Card : MonoBehaviour
     void OnMouseExit()
     {
         // Reset the color of the GameObject back to normal
-        m_Renderer.material.color = m_OriginalColor;
+        m_Renderer.material.color = originalColor;
     }
 }
