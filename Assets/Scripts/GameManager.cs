@@ -16,7 +16,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> player1Hand = new List<GameObject>();
 
     public List<GameObject> player2Deck = new List<GameObject>();
-    public List<GameObject> player2Hand = new List<GameObject>();
+    public static List<GameObject> player2Hand = new List<GameObject>();
+
+    public static List<GameObject> player1Field = new List<GameObject>();
+    public static List<GameObject> player2Field = new List<GameObject>();
 
     public static bool player1Turn;
     public static int player1Health;
@@ -29,6 +32,7 @@ public class GameManager : MonoBehaviour
     public static bool player2Passed;
 
     bool opponentMove;
+    bool stawp;
 
     public GameObject P1TurnIndicator;
     public GameObject P2TurnIndicator;
@@ -191,6 +195,12 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.EndRound:
+                if (!stawp)
+                {
+                    DamageCalculation(player1Field, player2Field);
+
+                    stawp = true;
+                }
                 break;
             case GameState.GameEnd:
                 break;
@@ -203,6 +213,83 @@ public class GameManager : MonoBehaviour
         GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
 
         DistributeCardsinHand();
+    }
+
+    void DamageCalculation(List <GameObject> P1Field, List<GameObject> P2Field)
+    {
+        int damage = 0;
+        int p1attack = 0;
+        int p2attack = 0;
+        int p1defense = 0;
+        int p2defense = 0;
+
+        Debug.Log("Cards on player's Field: ");
+        for (int i = 0; i < P1Field.Count; i++)
+        {
+            Debug.Log(P1Field[i].GetComponent<Card>().cardName + " with an attack of " +
+            P1Field[i].GetComponent<Card>().attack.ToString() + " and a defense of " +
+            P1Field[i].GetComponent<Card>().defense.ToString());
+            p1attack += P1Field[i].GetComponent<Card>().attack;
+            p1defense += P1Field[i].GetComponent<Card>().defense;
+        }
+
+        Debug.Log("Cards on enemy's Field: ");
+        for (int i = 0; i < P2Field.Count; i++)
+        {
+            Debug.Log(P2Field[i].GetComponent<Card>().cardName + " with an attack of " +
+            P2Field[i].GetComponent<Card>().attack.ToString() + " and a defense of " +
+            P2Field[i].GetComponent<Card>().defense.ToString());
+            p2attack += P2Field[i].GetComponent<Card>().attack;
+            p2defense += P2Field[i].GetComponent<Card>().defense;
+        }
+
+        Debug.Log("Player 1's total attack is: " + p1attack.ToString());
+        Debug.Log("Player 1's total defense is: " + p1defense.ToString());
+        Debug.Log("Player 2's total attack is: " + p2attack.ToString());
+        Debug.Log("Player 2's total defense is: " + p2defense.ToString());
+
+        int modifiedP1attack = 0;
+        int modifiedP2attack = 0;
+        if (p1attack - p2defense <= 0)
+        {
+            modifiedP1attack = 0;
+        }
+        else
+        {
+            modifiedP1attack = p1attack - p2defense;
+        }
+
+        if (p2attack - p1defense <= 0)
+        {
+            modifiedP2attack = 0;
+        }
+        else
+        {
+            modifiedP2attack = p2attack - p1defense;
+        }
+
+        Debug.Log("Player 1's modified attack is: " + modifiedP1attack.ToString());
+        Debug.Log("Player 2's modified attack is: " + modifiedP2attack.ToString());
+
+        if (modifiedP1attack > modifiedP2attack)
+        {
+            damage = modifiedP1attack - modifiedP2attack;
+            player2Health -= damage;
+            Debug.Log("The round ends with player 2 taking " + damage.ToString() + " damage.");
+        }
+        else
+        {
+            if (modifiedP1attack < modifiedP2attack)
+            {
+                damage = modifiedP2attack - modifiedP1attack;
+                player1Health -= damage;
+                Debug.Log("The round ends with player 1 taking " + damage.ToString() + " damage.");
+            }
+            else
+            {
+                Debug.Log("Neither player takes damage. The round ends in a draw.");
+            }
+        }
     }
 
     IEnumerator Deploy(List<GameObject> elligible)

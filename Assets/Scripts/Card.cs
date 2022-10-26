@@ -66,6 +66,7 @@ public class Card : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && canPlay && !deployed)
             {
+                GameManager.player1Field.Add(this.gameObject);
                 deployed = true;
                 Debug.Log("Pressed");
                 GameManager.currentEnergyPool -= energyCost;
@@ -100,5 +101,6 @@ public class Card : MonoBehaviour
         deployed = true;
         Debug.Log("Enemy AI has deployed a card!");
         GameManager.currentEnergyPool -= energyCost;
+        GameManager.player2Field.Add(this.gameObject);
     }
 }
