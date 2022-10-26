@@ -252,7 +252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &159064727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -270,7 +270,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 33, y: -324.99997}
-  m_SizeDelta: {x: 480, y: 120}
+  m_SizeDelta: {x: 480, y: 55.83319}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &159064728
 MonoBehaviour:
@@ -331,7 +331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &198020690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -348,8 +348,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33, y: -685}
-  m_SizeDelta: {x: 480, y: 120}
+  m_AnchoredPosition: {x: 33, y: -492.5}
+  m_SizeDelta: {x: 480, y: 55.83319}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &198020691
 MonoBehaviour:
@@ -489,7 +489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &306000159
 RectTransform:
   m_ObjectHideFlags: 0
@@ -506,8 +506,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33, y: -444.99997}
-  m_SizeDelta: {x: 480, y: 120}
+  m_AnchoredPosition: {x: 33, y: -380.8}
+  m_SizeDelta: {x: 480, y: 55.83319}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &306000160
 MonoBehaviour:
@@ -843,6 +843,7 @@ GameObject:
   m_Component:
   - component: {fileID: 536946635}
   - component: {fileID: 536946634}
+  - component: {fileID: 536946636}
   m_Layer: 0
   m_Name: Player 2 Deck
   m_TagString: Untagged
@@ -915,6 +916,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &536946636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536946633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a415f174f766824fb12b4671f6271ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &597043551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1053832369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1156,8 +1169,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33, y: -805}
-  m_SizeDelta: {x: 480, y: 120}
+  m_AnchoredPosition: {x: 33, y: -548.3}
+  m_SizeDelta: {x: 480, y: 55.83319}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1053832370
 MonoBehaviour:
@@ -1514,6 +1527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1320455692}
   - component: {fileID: 1320455691}
+  - component: {fileID: 1320455693}
   m_Layer: 0
   m_Name: Player 1 Deck
   m_TagString: Untagged
@@ -1586,6 +1600,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1320455693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320455690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a415f174f766824fb12b4671f6271ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1326966997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1326966998
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1620,8 +1646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33, y: -565}
-  m_SizeDelta: {x: 480, y: 120}
+  m_AnchoredPosition: {x: 33, y: -436.7}
+  m_SizeDelta: {x: 480, y: 55.83319}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1326966999
 MonoBehaviour:

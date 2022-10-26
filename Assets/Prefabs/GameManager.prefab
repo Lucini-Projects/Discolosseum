@@ -64,3 +64,28 @@ MonoBehaviour:
   - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
   - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
   - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
+  player1Hand: []
+  player2Deck:
+  - {fileID: 181250599223394074, guid: 221e6d5f4f382744fa18ec8af5ec7705, type: 3}
+  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
+  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
+  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
+  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
+  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
+  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
+  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
+  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
+  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
+  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
+  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
+  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
+  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
+  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
+  player2Hand: []
+  P1TurnIndicator: {fileID: 0}
+  P2TurnIndicator: {fileID: 0}
