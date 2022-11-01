@@ -13,6 +13,12 @@ TagManager:
   - Player2Health
   - Player2TurnIndicator
   - Player1TurnIndicator
+  - Player1Discard
+  - Player2Discard
+  - Player2DeckCount
+  - Player1DeckCount
+  - Player1DiscardPile
+  - Player2DiscardPile
   layers:
   - Default
   - TransparentFX
@@ -47,6 +53,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: UIElements
+    uniqueID: 1373394487
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

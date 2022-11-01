@@ -15,70 +15,99 @@ public class Card : MonoBehaviour
     bool canPlay;
     public bool deployed;
     bool privateKnowledge;
+    public bool discarded;
+
+    GameObject discardPile;
 
     Color playable = Color.yellow;
-
-    //This stores the GameObject’s original color
     Color originalColor;
 
+
+    //This is currently unused. Cards at the moment are deleted, but discard piles exist as a backup.
     void Start()
     {
+        if (isPlayer1)
+        {
+            discardPile = GameObject.FindWithTag("Player1DiscardPile");
+        }
+        else
+        {
+            discardPile = GameObject.FindWithTag("Player2DiscardPile");
+        }
         originalColor = GetComponent<SpriteRenderer>().material.color;
     }
 
     void Update()
     {
-        if (isPlayer1)
+        if (!discarded)
         {
-            privateKnowledge = false;
-            if (energyCost > GameManager.currentEnergyPool || deployed)
+            if (GameManager.discard == true)
             {
-                canPlay = false;
-                transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
+                Discard();
             }
             else
             {
-                canPlay = true;
-                transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = playable;
+                if (isPlayer1)
+                {
+                    privateKnowledge = false;
+                    if (energyCost > GameManager.currentEnergyPool || deployed)
+                    {
+                        canPlay = false;
+                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
+                    }
+                    else
+                    {
+                        canPlay = true;
+                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = playable;
+                    }
+                }
+                else
+                {
+                    if (!deployed)
+                    {
+                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = Color.black;
+                        GetComponent<SpriteRenderer>().material.color = Color.black;
+                        privateKnowledge = true;
+                    }
+                    else
+                    {
+                        privateKnowledge = false;
+                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
+                        GetComponent<SpriteRenderer>().material.color = originalColor;
+                    }
+                }
             }
         }
-        else
-        {
-            if (!deployed)
-            {
-                transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = Color.black;
-                GetComponent<SpriteRenderer>().material.color = Color.black;
-                privateKnowledge = true;
-            }
-            else
-            {
-                privateKnowledge = false;
-                transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
-                GetComponent<SpriteRenderer>().material.color = originalColor;
-            }
-        }
-
     }
 
     void OnMouseOver()
     {
-        if (!privateKnowledge)
+        if (!discarded)
         {
-            if (Input.GetMouseButtonDown(0) && canPlay && !deployed)
+            if (GameManager.currentlyPlayer1Turn)
             {
-                GameManager.player1Field.Add(this.gameObject);
-                deployed = true;
-                Debug.Log("Pressed");
-                GameManager.currentEnergyPool -= energyCost;
-                GameManager.SwitchTurn();
-            }
-            for (int i = 0; i < GameObject.FindGameObjectsWithTag("Display").Length; i++)
-            {
-                GameObject.FindWithTag("Display").transform.GetChild(0).GetComponent<Text>().text = cardName;
-                GameObject.FindWithTag("Display").transform.GetChild(1).GetComponent<Text>().text = className + " Class";
-                GameObject.FindWithTag("Display").transform.GetChild(2).GetComponent<Text>().text = "Attack: " + attack.ToString();
-                GameObject.FindWithTag("Display").transform.GetChild(3).GetComponent<Text>().text = "Defense: " + defense.ToString();
-                GameObject.FindWithTag("Display").transform.GetChild(4).GetComponent<Text>().text = "Cost: " + energyCost.ToString();
+                if (!privateKnowledge)
+                {
+                    if (Input.GetMouseButtonDown(0) && canPlay && !deployed)
+                    {
+                        //transform.position = new Vector2(transform.position.x, transform.position.y + 10);
+                        deployed = true;
+                        GameManager.player1Field.Add(this.gameObject);
+                        //GameManager.player1Hand.Remove(this.gameObject);
+                        
+                        //Debug.Log("Pressed");
+                        GameManager.currentEnergyPool -= energyCost;
+                        GameManager.switchToPlayer2 = true;
+                    }
+                    for (int i = 0; i < GameObject.FindGameObjectsWithTag("Display").Length; i++)
+                    {
+                        GameObject.FindWithTag("Display").transform.GetChild(0).GetComponent<Text>().text = cardName;
+                        GameObject.FindWithTag("Display").transform.GetChild(1).GetComponent<Text>().text = className + " Class";
+                        GameObject.FindWithTag("Display").transform.GetChild(2).GetComponent<Text>().text = "Attack: " + attack.ToString();
+                        GameObject.FindWithTag("Display").transform.GetChild(3).GetComponent<Text>().text = "Defense: " + defense.ToString();
+                        GameObject.FindWithTag("Display").transform.GetChild(4).GetComponent<Text>().text = "Cost: " + energyCost.ToString();
+                    }
+                }
             }
         }
     }
@@ -98,9 +127,34 @@ public class Card : MonoBehaviour
     //For the enemy AI
     public void Deploy()
     {
+        //transform.position = new Vector2(transform.position.x, transform.position.y-10);
         deployed = true;
-        Debug.Log("Enemy AI has deployed a card!");
+        Debug.Log("Enemy AI has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense.");
         GameManager.currentEnergyPool -= energyCost;
         GameManager.player2Field.Add(this.gameObject);
+        //GameManager.player2Hand.Remove(this.gameObject);
+    }
+
+    //To remove from play.
+    public void Discard()
+    {
+        if (deployed)
+        {
+            deployed = false;
+            discarded = true;
+            //GameObject duplicateCard = this.gameObject;
+            if(isPlayer1)
+            {
+                GameManager.player1Discard.Add(this.gameObject);
+                GameManager.player1Hand.Remove(this.gameObject);
+            }
+            else
+            {
+                GameManager.player2Discard.Add(this.gameObject);
+                GameManager.player2Hand.Remove(this.gameObject);
+            }
+            transform.position = discardPile.transform.position;
+            //Destroy(this.gameObject);
+        }
     }
 }
