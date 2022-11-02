@@ -22,8 +22,9 @@ public class Card : MonoBehaviour
     Color playable = Color.yellow;
     Color originalColor;
 
+    public AudioClip PlayCard;
+    public AudioClip PlaySovereignCard;
 
-    //This is currently unused. Cards at the moment are deleted, but discard piles exist as a backup.
     void Start()
     {
         if (isPlayer1)
@@ -57,8 +58,16 @@ public class Card : MonoBehaviour
                     }
                     else
                     {
-                        canPlay = true;
-                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = playable;
+                        if (GameManager.currentlyPlayer1Turn)
+                        {
+                            canPlay = true;
+                            transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = playable;
+                        }
+                        else
+                        {
+                            canPlay = false;
+                            transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
+                        }
                     }
                 }
                 else
@@ -90,7 +99,17 @@ public class Card : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0) && canPlay && !deployed)
                     {
-                        //transform.position = new Vector2(transform.position.x, transform.position.y + 10);
+                        if (className == "Sovereign")
+                        {
+                            GetComponent<AudioSource>().clip = PlaySovereignCard;
+                            GetComponent<AudioSource>().Play();
+                        }
+                        else
+                        {
+                            GetComponent<AudioSource>().clip = PlayCard;
+                            GetComponent<AudioSource>().Play();
+                        }
+
                         deployed = true;
                         GameManager.player1Field.Add(this.gameObject);
                         //GameManager.player1Hand.Remove(this.gameObject);
@@ -127,6 +146,16 @@ public class Card : MonoBehaviour
     //For the enemy AI
     public void Deploy()
     {
+        if (className == "Sovereign")
+        {
+            GetComponent<AudioSource>().clip = PlaySovereignCard;
+            GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            GetComponent<AudioSource>().clip = PlayCard;
+            GetComponent<AudioSource>().Play();
+        }
         //transform.position = new Vector2(transform.position.x, transform.position.y-10);
         deployed = true;
         Debug.Log("Enemy AI has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense.");

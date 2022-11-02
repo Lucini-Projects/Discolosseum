@@ -3,7 +3,9 @@ guid: 8b0261b33f1161b439cb9e796f8856b7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PlayCard: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
+  - PlaySovereignCard: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

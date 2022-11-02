@@ -40,6 +40,13 @@ public class GameManager : MonoBehaviour
     public static bool player1Passed;
     public static bool player2Passed;
 
+    //SFX
+    public AudioClip Draw1Card;
+    public AudioClip Draw3Cards;
+    public AudioClip Draw4Cards;
+    public AudioClip SwitchRound;
+    public AudioClip Win;
+
     public static bool GameOver;
 
     public static bool discard = false;
@@ -170,6 +177,8 @@ public class GameManager : MonoBehaviour
                 case GameState.NextRound:
                     discard = false;
                     DrawingProcedure(lastTookDamage);
+                    GetComponent<AudioSource>().clip = SwitchRound;
+                    GetComponent<AudioSource>().Play();
                     if (maxEnergyPool < 15)
                     {
                         maxEnergyPool++;
@@ -192,6 +201,8 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case GameState.GameEnd:
+                    GetComponent<AudioSource>().clip = Win;
+                    GetComponent<AudioSource>().Play();
                     if (player1Health <= 0)
                     {
                         Debug.Log("Player 2 Wins!");
@@ -473,6 +484,8 @@ public class GameManager : MonoBehaviour
 
     void Draw4(List<GameObject> Deck, List<GameObject> Hand)
     {
+        GetComponent<AudioSource>().clip = Draw4Cards;
+        GetComponent<AudioSource>().Play();
         for (int i = 0; i < 4; i++)
         {
             GameObject newCard = Instantiate(Deck[i], new Vector2(-20 + i * 10, -14), Quaternion.identity);
@@ -483,6 +496,8 @@ public class GameManager : MonoBehaviour
 
     void Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
+        GetComponent<AudioSource>().clip = Draw1Card;
+        GetComponent<AudioSource>().Play();
         if (Deck.Count == 0)
         {
             for (int i = 0; i < Discard.Count; i++)
@@ -500,6 +515,8 @@ public class GameManager : MonoBehaviour
 
     void Draw3(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
+        GetComponent<AudioSource>().clip = Draw3Cards;
+        GetComponent<AudioSource>().Play();
         Debug.Log("No more cards in hand, drawing 3.");
         for (int j = 0; j < 3; j++)
         {
