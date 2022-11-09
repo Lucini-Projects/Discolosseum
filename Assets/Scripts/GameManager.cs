@@ -103,6 +103,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Called");
+            Application.Quit();
+        }
+
         if (!GameOver)
         {
             player1DeckCount = player1Deck.Count;

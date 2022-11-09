@@ -10,6 +10,8 @@ public class Card : MonoBehaviour
     public int energyCost;
     public int attack;
     public int defense;
+    public Sprite cardBack;
+    public Sprite cardFront;
 
     public bool isPlayer1;
     bool canPlay;
@@ -35,7 +37,7 @@ public class Card : MonoBehaviour
         {
             discardPile = GameObject.FindWithTag("Player2DiscardPile");
         }
-        originalColor = GetComponent<SpriteRenderer>().material.color;
+        cardFront = GetComponent<SpriteRenderer>().sprite;
     }
 
     void Update()
@@ -54,19 +56,19 @@ public class Card : MonoBehaviour
                     if (energyCost > GameManager.currentEnergyPool || deployed)
                     {
                         canPlay = false;
-                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
+                        transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                     }
                     else
                     {
                         if (GameManager.currentlyPlayer1Turn)
                         {
                             canPlay = true;
-                            transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = playable;
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
                         }
                         else
                         {
                             canPlay = false;
-                            transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
                         }
                     }
                 }
@@ -74,15 +76,13 @@ public class Card : MonoBehaviour
                 {
                     if (!deployed)
                     {
-                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = Color.black;
-                        GetComponent<SpriteRenderer>().material.color = Color.black;
+                        GetComponent<SpriteRenderer>().sprite = cardBack;
                         privateKnowledge = true;
                     }
                     else
                     {
                         privateKnowledge = false;
-                        transform.GetChild(0).GetComponent<SpriteRenderer>().material.color = originalColor;
-                        GetComponent<SpriteRenderer>().material.color = originalColor;
+                        GetComponent<SpriteRenderer>().sprite = cardFront;
                     }
                 }
             }
