@@ -552,11 +552,11 @@ public class GameManager : MonoBehaviour
                 player1Hand[i].GetComponent<Card>().isPlayer1 = true;
                 if (player1Hand[i].GetComponent<Card>().deployed)
                 {
-                    player1Hand[i].transform.position = new Vector2(first + i * 8, -8);
+                    player1Hand[i].transform.position = new Vector2(first + i * 10, -8);
                 }
                 else
                 {
-                    player1Hand[i].transform.position = new Vector2(first + i * 8, -18);
+                    player1Hand[i].transform.position = new Vector2(first + i * 10, -24);
                 }
             }
         }
@@ -567,11 +567,11 @@ public class GameManager : MonoBehaviour
             {
                 if (player2Hand[i].GetComponent<Card>().deployed)
                 {
-                    player2Hand[i].transform.position = new Vector2(second + i * 8, 8);
+                    player2Hand[i].transform.position = new Vector2(second + i * 10, 8);
                 }
                 else
                 {
-                    player2Hand[i].transform.position = new Vector2(second + i * 8, 18);
+                    player2Hand[i].transform.position = new Vector2(second + i * 10, 24);
                 }
             }
         }

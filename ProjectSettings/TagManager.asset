@@ -19,6 +19,9 @@ TagManager:
   - Player1DeckCount
   - Player1DiscardPile
   - Player2DiscardPile
+  - Player1Deck
+  - Player2Deck
+  - Details
   layers:
   - Default
   - TransparentFX

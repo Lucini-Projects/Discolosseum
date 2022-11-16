@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181250599223394074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6059249172814630165}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 1373394487
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c3bf26a2f0ed7ae42a0b85e196e7a54f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c3d4db8e6b15c704f90224c6478aa08c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,7 +133,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

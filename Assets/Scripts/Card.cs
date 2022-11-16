@@ -91,6 +91,8 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
+        GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(-670, 0);
+        GameObject.FindWithTag("Details").GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
         if (!discarded)
         {
             if (GameManager.currentlyPlayer1Turn)
@@ -118,14 +120,6 @@ public class Card : MonoBehaviour
                         GameManager.currentEnergyPool -= energyCost;
                         GameManager.switchToPlayer2 = true;
                     }
-                    for (int i = 0; i < GameObject.FindGameObjectsWithTag("Display").Length; i++)
-                    {
-                        GameObject.FindWithTag("Display").transform.GetChild(0).GetComponent<Text>().text = cardName;
-                        GameObject.FindWithTag("Display").transform.GetChild(1).GetComponent<Text>().text = className + " Class";
-                        GameObject.FindWithTag("Display").transform.GetChild(2).GetComponent<Text>().text = "Attack: " + attack.ToString();
-                        GameObject.FindWithTag("Display").transform.GetChild(3).GetComponent<Text>().text = "Defense: " + defense.ToString();
-                        GameObject.FindWithTag("Display").transform.GetChild(4).GetComponent<Text>().text = "Cost: " + energyCost.ToString();
-                    }
                 }
             }
         }
@@ -133,14 +127,7 @@ public class Card : MonoBehaviour
 
     void OnMouseExit()
     {
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Display").Length; i++)
-        {
-            GameObject.FindWithTag("Display").transform.GetChild(0).GetComponent<Text>().text = "";
-            GameObject.FindWithTag("Display").transform.GetChild(1).GetComponent<Text>().text = "";
-            GameObject.FindWithTag("Display").transform.GetChild(2).GetComponent<Text>().text = "";
-            GameObject.FindWithTag("Display").transform.GetChild(3).GetComponent<Text>().text = "";
-            GameObject.FindWithTag("Display").transform.GetChild(4).GetComponent<Text>().text = "";
-        }
+        GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(-670, 1000);
     }
 
     //For the enemy AI
