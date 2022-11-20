@@ -121,7 +121,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.75, y: 9.75, z: 0.2}
+  m_Size: {x: 10, y: 14, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &3954254298404246806
 AudioSource:
@@ -269,6 +269,14 @@ PrefabInstance:
     - target: {fileID: 5247645534384663705, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247645534384663705, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.425
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247645534384663705, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 5247645534384663710, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
       propertyPath: m_Name

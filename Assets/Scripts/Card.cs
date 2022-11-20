@@ -21,11 +21,10 @@ public class Card : MonoBehaviour
 
     GameObject discardPile;
 
-    Color playable = Color.yellow;
-    Color originalColor;
-
     public AudioClip PlayCard;
     public AudioClip PlaySovereignCard;
+
+    public Card card;
 
     void Start()
     {
@@ -38,6 +37,7 @@ public class Card : MonoBehaviour
             discardPile = GameObject.FindWithTag("Player2DiscardPile");
         }
         cardFront = GetComponent<SpriteRenderer>().sprite;
+        card = GetComponent<Card>();
     }
 
     void Update()
@@ -60,7 +60,7 @@ public class Card : MonoBehaviour
                     }
                     else
                     {
-                        if (GameManager.currentlyPlayer1Turn)
+                        if (GameManager.currentlyPlayer1Turn && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
                         {
                             canPlay = true;
                             transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
@@ -68,7 +68,7 @@ public class Card : MonoBehaviour
                         else
                         {
                             canPlay = false;
-                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                         }
                     }
                 }
@@ -91,7 +91,7 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
-        GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(-670, 0);
+        GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(670, 0);
         GameObject.FindWithTag("Details").GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
         if (!discarded)
         {
@@ -111,7 +111,7 @@ public class Card : MonoBehaviour
                             GetComponent<AudioSource>().clip = PlayCard;
                             GetComponent<AudioSource>().Play();
                         }
-
+                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
                         deployed = true;
                         GameManager.player1Field.Add(this.gameObject);
                         //GameManager.player1Hand.Remove(this.gameObject);
@@ -127,7 +127,7 @@ public class Card : MonoBehaviour
 
     void OnMouseExit()
     {
-        GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(-670, 1000);
+        GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(670, 1000);
     }
 
     //For the enemy AI
@@ -145,7 +145,7 @@ public class Card : MonoBehaviour
         }
         //transform.position = new Vector2(transform.position.x, transform.position.y-10);
         deployed = true;
-        Debug.Log("Enemy AI has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense.");
+        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Enemy AI has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
         GameManager.currentEnergyPool -= energyCost;
         GameManager.player2Field.Add(this.gameObject);
         //GameManager.player2Hand.Remove(this.gameObject);

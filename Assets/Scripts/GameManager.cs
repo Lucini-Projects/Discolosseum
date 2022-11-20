@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
         gameState = GameState.GameStart;
     }
 
@@ -109,127 +110,123 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (!GameOver)
+        if (!GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
         {
-            player1DeckCount = player1Deck.Count;
-            player2DeckCount = player2Deck.Count;
-
-            switch (gameState)
+            if (!GameOver)
             {
-                default:
-                    Debug.Log("This is a glitch. Fix it.");
-                    break;
-                case GameState.GameStart:
-                    Shuffle(player1Deck);
-                    Shuffle(player2Deck);
-                    Draw4(player1Deck, player1Hand);
-                    Draw4(player2Deck, player2Hand);
-                    player1Health = 20;
-                    player2Health = 20;
-                    maxEnergyPool = 5;
-                    currentEnergyPool = maxEnergyPool;
-                    roundNumber = 1;
-                    gameState = GameState.Player1Turn;
-                    //Debug.Log("Switching GameState.");
-                    player1Starts = true;
-                    break;
-                case GameState.Player1Turn:
-                    currentlyPlayer1Turn = true;
-                    if (player1Passed && player2Passed)
-                    {
-                        Debug.Log("Both players have passed. Ending Round.");
-                        gameState = GameState.EndRound;
-                    }
-                    else
-                    {
-                        Player1Turn();
-                    }
-                    break;
-                case GameState.Player2Turn:
-                    currentlyPlayer1Turn = false;
-                    if (player1Passed && player2Passed)
-                    {
-                        Debug.Log("Both players have passed. Ending Round.");
-                        gameState = GameState.EndRound;
-                    }
-                    else
-                    {
-                        if (!opponentMove)
-                        {
-                            StartCoroutine(AITurn());
-                        }
-                    }
-                    break;
-                case GameState.EndRound:
-                    player1Passed = false;
-                    player2Passed = false;
-                    DamageCalculation(player1Field, player2Field);
-                    if (player1Health <= 0 || player2Health <= 0)
-                    {
-                        gameState = GameState.GameEnd;
-                    }
-                    else
-                    {
-                        gameState = GameState.Discard;
-                    }
-                    break;
-                case GameState.Discard:
-                    if (discard == false)
-                    {
-                        discard = true;
-                        gameState = GameState.NextRound;
-                    }
-                    break;
-                case GameState.NextRound:
-                    discard = false;
-                    DrawingProcedure(lastTookDamage);
-                    GetComponent<AudioSource>().clip = SwitchRound;
-                    GetComponent<AudioSource>().Play();
-                    if (maxEnergyPool < 15)
-                    {
-                        maxEnergyPool++;
-                    }
-                    else
-                    {
+                player1DeckCount = player1Deck.Count;
+                player2DeckCount = player2Deck.Count;
+
+                switch (gameState)
+                {
+                    default:
+                        Debug.Log("This is a glitch. Fix it.");
+                        break;
+                    case GameState.GameStart:
+                        Shuffle(player1Deck);
+                        Shuffle(player2Deck);
+                        Draw4(player1Deck, player1Hand);
+                        Draw4(player2Deck, player2Hand);
+                        player1Health = 20;
+                        player2Health = 20;
                         maxEnergyPool = 5;
-                    }
-                    currentEnergyPool = maxEnergyPool;
-                    roundNumber++;
-                    player1Starts = !player1Starts;
-                    if (player1Starts)
-                    {
+                        currentEnergyPool = maxEnergyPool;
+                        roundNumber = 1;
                         gameState = GameState.Player1Turn;
-                    }
-                    else
-                    {
-                        opponentMove = false;
-                        gameState = GameState.Player2Turn;
-                    }
-                    break;
-                case GameState.GameEnd:
-                    GetComponent<AudioSource>().clip = Win;
-                    GetComponent<AudioSource>().Play();
-                    if (player1Health <= 0)
-                    {
-                        Debug.Log("Player 2 Wins!");
-                    }
-                    if (player2Health <= 0)
-                    {
-                        Debug.Log("Player 1 Wins!");
-                    }
-                    GameOver = true;
-                    break;
+                        //Debug.Log("Switching GameState.");
+                        player1Starts = true;
+                        break;
+                    case GameState.Player1Turn:
+                        currentlyPlayer1Turn = true;
+                        if (player1Passed && player2Passed)
+                        {
+                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                            gameState = GameState.EndRound;
+                        }
+                        else
+                        {
+                            Player1Turn();
+                        }
+                        break;
+                    case GameState.Player2Turn:
+                        currentlyPlayer1Turn = false;
+                        if (player1Passed && player2Passed)
+                        {
+                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                            gameState = GameState.EndRound;
+                        }
+                        else
+                        {
+                            if (!opponentMove)
+                            {
+                                StartCoroutine(AITurn());
+                            }
+                        }
+                        break;
+                    case GameState.EndRound:
+                        if (!stawp)
+                        {
+                            StartCoroutine(EndRound());
+                        }
+                        break;
+                    case GameState.Discard:
+                        if (discard == false)
+                        {
+                            discard = true;
+                            gameState = GameState.NextRound;
+                        }
+                        break;
+                    case GameState.NextRound:
+                        discard = false;
+                        DrawingProcedure(lastTookDamage);
+                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Starting new Round."));
+                        GetComponent<AudioSource>().clip = SwitchRound;
+                        GetComponent<AudioSource>().Play();
+                        if (maxEnergyPool < 15)
+                        {
+                            maxEnergyPool++;
+                        }
+                        else
+                        {
+                            maxEnergyPool = 5;
+                        }
+                        currentEnergyPool = maxEnergyPool;
+                        roundNumber++;
+                        player1Starts = !player1Starts;
+                        if (player1Starts)
+                        {
+                            gameState = GameState.Player1Turn;
+                        }
+                        else
+                        {
+                            opponentMove = false;
+                            gameState = GameState.Player2Turn;
+                        }
+                        break;
+                    case GameState.GameEnd:
+                        GetComponent<AudioSource>().clip = Win;
+                        GetComponent<AudioSource>().Play();
+                        if (player1Health <= 0)
+                        {
+                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 Wins!"));
+                        }
+                        if (player2Health <= 0)
+                        {
+                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 Wins!"));
+                        }
+                        GameOver = true;
+                        break;
+                }
             }
-
-            GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
-            GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
-
-            GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
-            GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
-
-            DistributeCardsinHand();
         }
-    }
+        GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
+        GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
+
+        GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
+        GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
+
+        DistributeCardsinHand();
+    }    
 
     void Player1Turn()
     {
@@ -237,7 +234,7 @@ public class GameManager : MonoBehaviour
         P2TurnIndicator.SetActive(false);
         if (player1Passed)
         {
-            Debug.Log("Player 1 has passed. Switching to Player 2.");
+            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to Player 2."));
             opponentMove = false;
             gameState = GameState.Player2Turn;
         }
@@ -260,7 +257,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (elligible.Count == 0)
                 {
-                    Debug.Log("No more moves are possible. Player 1 is forced to pass.");
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 1 is forced to pass."));
                     player1Passed = true;
                     opponentMove = false;
                     gameState = GameState.Player2Turn;
@@ -402,7 +399,7 @@ public class GameManager : MonoBehaviour
             damage = modifiedP1attack - modifiedP2attack;
             player2Health -= damage;
             lastTookDamage = "Player2";
-            Debug.Log("The round ends with player 2 taking " + damage.ToString() + " damage.");
+            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The round ends with player 2 taking " + damage.ToString() + " damage."));
         }
         else
         {
@@ -411,16 +408,39 @@ public class GameManager : MonoBehaviour
                 damage = modifiedP2attack - modifiedP1attack;
                 player1Health -= damage;
                 lastTookDamage = "Player1";
-                Debug.Log("The round ends with player 1 taking " + damage.ToString() + " damage.");
+                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The round ends with player 1 taking " + damage.ToString() + " damage."));
             }
             else
             {
-                Debug.Log("Neither player takes damage. The round ends in a draw.");
+                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Neither player takes damage. The round ends in a draw."));
                 lastTookDamage = "Draw";
             }
         }
         player1Field.Clear();
         player2Field.Clear();
+    }
+
+    IEnumerator EndRound()
+    {
+        stawp = true;
+        do
+        {
+            yield return null;
+        } while (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping);
+        yield return new WaitForSeconds(1);
+        player1Passed = false;
+        player2Passed = false;
+        DamageCalculation(player1Field, player2Field);
+        if (player1Health <= 0 || player2Health <= 0)
+        {
+            stawp = false;
+            gameState = GameState.GameEnd;
+        }
+        else
+        {
+            stawp = false;
+            gameState = GameState.Discard;
+        }
     }
 
     IEnumerator AITurn()
@@ -450,9 +470,16 @@ public class GameManager : MonoBehaviour
             player2Passed = true;
         }
 
+        do
+        {
+            yield return null;
+        } while (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping);
+
+        yield return new WaitForSeconds(1);
+
         if (currentEnergyPool == 0)
         {
-            Debug.Log("The energy pool is empty. Ending Round.");
+            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is empty. Ending round."));
             gameState = GameState.EndRound;
         }
         else
@@ -461,12 +488,12 @@ public class GameManager : MonoBehaviour
             {
                 if (player1Passed)
                 {
-                    Debug.Log("Both players have passed. Ending Round.");
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending round."));
                     gameState = GameState.EndRound;
                 }
                 else
                 {
-                    Debug.Log("Player 2 has passed. Switching to Player 1.");
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 has passed. Switching to player 1."));
                     gameState = GameState.Player1Turn;
                 }
             }
@@ -508,9 +535,11 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < Discard.Count; i++)
             {
-                Discard[i].GetComponent<Card>().discarded = false;
-                Deck.Add(Discard[i]);
+                //Discard[i].GetComponent<Card>().discarded = false;
+                Deck.Add(Discard[i].GetComponent<Card>().card.gameObject);
+                //Destroy(Discard[i]);
             }
+            Discard.Clear();
             Debug.Log("No more cards in deck, shuffling discard pile into deck.");
             Shuffle(Deck);
         }
@@ -552,11 +581,11 @@ public class GameManager : MonoBehaviour
                 player1Hand[i].GetComponent<Card>().isPlayer1 = true;
                 if (player1Hand[i].GetComponent<Card>().deployed)
                 {
-                    player1Hand[i].transform.position = new Vector2(first + i * 10, -8);
+                    player1Hand[i].transform.position = new Vector2(first + i * 10, -14);
                 }
                 else
                 {
-                    player1Hand[i].transform.position = new Vector2(first + i * 10, -24);
+                    player1Hand[i].transform.position = new Vector2(first + i * 10, -28);
                 }
             }
         }
@@ -567,11 +596,11 @@ public class GameManager : MonoBehaviour
             {
                 if (player2Hand[i].GetComponent<Card>().deployed)
                 {
-                    player2Hand[i].transform.position = new Vector2(second + i * 10, 8);
+                    player2Hand[i].transform.position = new Vector2(second + i * 10, 14);
                 }
                 else
                 {
-                    player2Hand[i].transform.position = new Vector2(second + i * 10, 24);
+                    player2Hand[i].transform.position = new Vector2(second + i * 10, 28);
                 }
             }
         }

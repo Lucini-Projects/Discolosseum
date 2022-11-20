@@ -22,6 +22,7 @@ TagManager:
   - Player1Deck
   - Player2Deck
   - Details
+  - Narration
   layers:
   - Default
   - TransparentFX

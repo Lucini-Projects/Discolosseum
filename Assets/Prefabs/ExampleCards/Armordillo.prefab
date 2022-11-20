@@ -75,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 1373394487
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e62492e97ab83324d8fec6e9a9606001, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f78f41e1997196449993b842a59766c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.75, y: 9.75}
+  m_Size: {x: 10, y: 14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -121,7 +121,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.75, y: 9.75, z: 0.2}
+  m_Size: {x: 10, y: 14, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &6190374329886204597
 AudioSource:
