@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     public static bool opponentMove;
     bool stawp;
+    bool stopOpponent;
 
     string lastTookDamage = "";
 
@@ -112,46 +113,48 @@ public class GameManager : MonoBehaviour
 
         if (!GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
         {
-            if (!GameOver)
-            {
-                player1DeckCount = player1Deck.Count;
-                player2DeckCount = player2Deck.Count;
 
-                switch (gameState)
-                {
-                    default:
-                        Debug.Log("This is a glitch. Fix it.");
-                        break;
-                    case GameState.GameStart:
-                        Shuffle(player1Deck);
-                        Shuffle(player2Deck);
-                        Draw4(player1Deck, player1Hand);
-                        Draw4(player2Deck, player2Hand);
-                        player1Health = 20;
-                        player2Health = 20;
-                        maxEnergyPool = 5;
-                        currentEnergyPool = maxEnergyPool;
-                        roundNumber = 1;
-                        gameState = GameState.Player1Turn;
-                        //Debug.Log("Switching GameState.");
-                        player1Starts = true;
-                        break;
-                    case GameState.Player1Turn:
-                        currentlyPlayer1Turn = true;
+            player1DeckCount = player1Deck.Count;
+            player2DeckCount = player2Deck.Count;
+
+            switch (gameState)
+            {
+                default:
+                    Debug.Log("This is a glitch. Fix it.");
+                    break;
+                case GameState.GameStart:
+                    Shuffle(player1Deck);
+                    Shuffle(player2Deck);
+                    Draw4(player1Deck, player1Hand);
+                    Draw4(player2Deck, player2Hand);
+                    player1Health = 20;
+                    player2Health = 20;
+                    maxEnergyPool = 5;
+                    currentEnergyPool = maxEnergyPool;
+                    roundNumber = 1;
+                    gameState = GameState.Player1Turn;
+                    //Debug.Log("Switching GameState.");
+                    player1Starts = true;
+                    break;
+                case GameState.Player1Turn:
+                    currentlyPlayer1Turn = true;
+                    if (player1Passed && player2Passed)
+                    {
+                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                        gameState = GameState.EndRound;
+                    }
+                    else
+                    {
+                        Player1Turn();
+                    }
+                    break;
+                case GameState.Player2Turn:
+                    currentlyPlayer1Turn = false;
+                    if (!stopOpponent)
+                    {
                         if (player1Passed && player2Passed)
                         {
-                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                            gameState = GameState.EndRound;
-                        }
-                        else
-                        {
-                            Player1Turn();
-                        }
-                        break;
-                    case GameState.Player2Turn:
-                        currentlyPlayer1Turn = false;
-                        if (player1Passed && player2Passed)
-                        {
+                            stopOpponent = true;
                             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                             gameState = GameState.EndRound;
                         }
@@ -162,48 +165,45 @@ public class GameManager : MonoBehaviour
                                 StartCoroutine(AITurn());
                             }
                         }
-                        break;
-                    case GameState.EndRound:
-                        if (!stawp)
-                        {
-                            StartCoroutine(EndRound());
-                        }
-                        break;
-                    case GameState.Discard:
-                        if (discard == false)
-                        {
-                            discard = true;
-                            gameState = GameState.NextRound;
-                        }
-                        break;
-                    case GameState.NextRound:
-                        discard = false;
-                        DrawingProcedure(lastTookDamage);
-                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Starting new Round."));
-                        GetComponent<AudioSource>().clip = SwitchRound;
-                        GetComponent<AudioSource>().Play();
-                        if (maxEnergyPool < 15)
-                        {
-                            maxEnergyPool++;
-                        }
-                        else
-                        {
-                            maxEnergyPool = 5;
-                        }
-                        currentEnergyPool = maxEnergyPool;
-                        roundNumber++;
-                        player1Starts = !player1Starts;
-                        if (player1Starts)
-                        {
-                            gameState = GameState.Player1Turn;
-                        }
-                        else
-                        {
-                            opponentMove = false;
-                            gameState = GameState.Player2Turn;
-                        }
-                        break;
-                    case GameState.GameEnd:
+                    }
+                    break;
+                case GameState.EndRound:
+                    stopOpponent = false;
+                    if (!stawp)
+                    {
+                        StartCoroutine(EndRound());
+                    }
+                    break;
+                case GameState.NextRound:
+                    discard = false;
+                    DrawingProcedure(lastTookDamage);
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Starting new Round."));
+                    GetComponent<AudioSource>().clip = SwitchRound;
+                    GetComponent<AudioSource>().Play();
+                    if (maxEnergyPool < 15)
+                    {
+                        maxEnergyPool++;
+                    }
+                    else
+                    {
+                        maxEnergyPool = 5;
+                    }
+                    currentEnergyPool = maxEnergyPool;
+                    roundNumber++;
+                    player1Starts = !player1Starts;
+                    if (player1Starts)
+                    {
+                        gameState = GameState.Player1Turn;
+                    }
+                    else
+                    {
+                        opponentMove = false;
+                        gameState = GameState.Player2Turn;
+                    }
+                    break;
+                case GameState.GameEnd:
+                    if (!GameOver)
+                    {
                         GetComponent<AudioSource>().clip = Win;
                         GetComponent<AudioSource>().Play();
                         if (player1Health <= 0)
@@ -215,9 +215,18 @@ public class GameManager : MonoBehaviour
                             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 Wins!"));
                         }
                         GameOver = true;
-                        break;
-                }
+                    }
+                    break;
             }
+        }
+
+        if(player1Health < 0)
+        {
+            player1Health = 0;
+        }
+        if(player2Health < 0)
+        {
+            player2Health = 0;
         }
         GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
         GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
@@ -226,7 +235,7 @@ public class GameManager : MonoBehaviour
         GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
 
         DistributeCardsinHand();
-    }    
+    }
 
     void Player1Turn()
     {
@@ -338,7 +347,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void DamageCalculation(List<GameObject> P1Field, List<GameObject> P2Field)
+    IEnumerator DamageCalculation(List<GameObject> P1Field, List<GameObject> P2Field)
     {
         int damage = 0;
         int p1attack = 0;
@@ -349,9 +358,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Cards on player's Field: ");
         for (int i = 0; i < P1Field.Count; i++)
         {
-            Debug.Log(P1Field[i].GetComponent<Card>().cardName + " with an attack of " +
-            P1Field[i].GetComponent<Card>().attack.ToString() + " and a defense of " +
-            P1Field[i].GetComponent<Card>().defense.ToString());
             p1attack += P1Field[i].GetComponent<Card>().attack;
             p1defense += P1Field[i].GetComponent<Card>().defense;
         }
@@ -359,17 +365,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Cards on enemy's Field: ");
         for (int i = 0; i < P2Field.Count; i++)
         {
-            Debug.Log(P2Field[i].GetComponent<Card>().cardName + " with an attack of " +
-            P2Field[i].GetComponent<Card>().attack.ToString() + " and a defense of " +
-            P2Field[i].GetComponent<Card>().defense.ToString());
             p2attack += P2Field[i].GetComponent<Card>().attack;
             p2defense += P2Field[i].GetComponent<Card>().defense;
         }
-
-        Debug.Log("Player 1's total attack is: " + p1attack.ToString());
-        Debug.Log("Player 1's total defense is: " + p1defense.ToString());
-        Debug.Log("Player 2's total attack is: " + p2attack.ToString());
-        Debug.Log("Player 2's total defense is: " + p2defense.ToString());
 
         int modifiedP1attack = 0;
         int modifiedP2attack = 0;
@@ -391,8 +389,11 @@ public class GameManager : MonoBehaviour
             modifiedP2attack = p2attack - p1defense;
         }
 
-        //Debug.Log("Player 1's modified attack is: " + modifiedP1attack.ToString());
-        //Debug.Log("Player 2's modified attack is: " + modifiedP2attack.ToString());
+        do
+        {
+            yield return null;
+        } while (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping);
+        yield return new WaitForSeconds(1);
 
         if (modifiedP1attack > modifiedP2attack)
         {
@@ -418,6 +419,28 @@ public class GameManager : MonoBehaviour
         }
         player1Field.Clear();
         player2Field.Clear();
+
+        GameObject[] objects;
+        objects = GameObject.FindGameObjectsWithTag("Card");
+        foreach (GameObject go in objects)
+        {
+            if (go.GetComponent<Card>().deployed)
+            {
+                go.GetComponent<Card>().Discard();
+            }
+            yield return new WaitForSeconds(.1f);
+        }
+
+        if (player1Health <= 0 || player2Health <= 0)
+        {
+            stawp = false;
+            gameState = GameState.GameEnd;
+        }
+        else
+        {
+            stawp = false;
+            gameState = GameState.NextRound;
+        }
     }
 
     IEnumerator EndRound()
@@ -427,20 +450,11 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         } while (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping);
+
         yield return new WaitForSeconds(1);
         player1Passed = false;
         player2Passed = false;
-        DamageCalculation(player1Field, player2Field);
-        if (player1Health <= 0 || player2Health <= 0)
-        {
-            stawp = false;
-            gameState = GameState.GameEnd;
-        }
-        else
-        {
-            stawp = false;
-            gameState = GameState.Discard;
-        }
+        StartCoroutine(DamageCalculation(player1Field, player2Field));
     }
 
     IEnumerator AITurn()
@@ -535,9 +549,11 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < Discard.Count; i++)
             {
-                //Discard[i].GetComponent<Card>().discarded = false;
-                Deck.Add(Discard[i].GetComponent<Card>().card.gameObject);
-                //Destroy(Discard[i]);
+                Discard[i].GetComponent<Card>().deployed = false;
+                Discard[i].GetComponent<Card>().canPlay = false;
+                Discard[i].GetComponent<Card>().privateKnowledge = false;
+                Discard[i].GetComponent<Card>().discarded = false;
+                Deck.Add(Discard[i]);
             }
             Discard.Clear();
             Debug.Log("No more cards in deck, shuffling discard pile into deck.");
@@ -559,9 +575,13 @@ public class GameManager : MonoBehaviour
             {
                 for (int i = 0; i < Discard.Count; i++)
                 {
+                    Discard[i].GetComponent<Card>().deployed = false;
+                    Discard[i].GetComponent<Card>().canPlay = false;
+                    Discard[i].GetComponent<Card>().privateKnowledge = false;
                     Discard[i].GetComponent<Card>().discarded = false;
                     Deck.Add(Discard[i]);
                 }
+                Discard.Clear();
                 Debug.Log("No more cards in deck, shuffling discard pile into deck.");
                 Shuffle(Deck);
             }

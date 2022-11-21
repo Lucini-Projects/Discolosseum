@@ -14,17 +14,15 @@ public class Card : MonoBehaviour
     public Sprite cardFront;
 
     public bool isPlayer1;
-    bool canPlay;
+    public bool canPlay;
     public bool deployed;
-    bool privateKnowledge;
+    public bool privateKnowledge;
     public bool discarded;
 
     GameObject discardPile;
 
     public AudioClip PlayCard;
     public AudioClip PlaySovereignCard;
-
-    public Card card;
 
     void Start()
     {
@@ -36,56 +34,48 @@ public class Card : MonoBehaviour
         {
             discardPile = GameObject.FindWithTag("Player2DiscardPile");
         }
-        cardFront = GetComponent<SpriteRenderer>().sprite;
-        card = GetComponent<Card>();
     }
 
     void Update()
     {
         if (!discarded)
         {
-            if (GameManager.discard == true)
+            if (isPlayer1)
             {
-                Discard();
-            }
-            else
-            {
-                if (isPlayer1)
+                privateKnowledge = false;
+                if (energyCost > GameManager.currentEnergyPool || deployed)
                 {
-                    privateKnowledge = false;
-                    if (energyCost > GameManager.currentEnergyPool || deployed)
+                    canPlay = false;
+                    transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                }
+                else
+                {
+                    if (GameManager.currentlyPlayer1Turn && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
+                    {
+                        canPlay = true;
+                        transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
+                    }
+                    else
                     {
                         canPlay = false;
                         transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                     }
-                    else
-                    {
-                        if (GameManager.currentlyPlayer1Turn && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
-                        {
-                            canPlay = true;
-                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
-                        }
-                        else
-                        {
-                            canPlay = false;
-                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
-                        }
-                    }
+                }
+            }
+            else
+            {
+                if (!deployed)
+                {
+                    GetComponent<SpriteRenderer>().sprite = cardBack;
+                    privateKnowledge = true;
                 }
                 else
                 {
-                    if (!deployed)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = cardBack;
-                        privateKnowledge = true;
-                    }
-                    else
-                    {
-                        privateKnowledge = false;
-                        GetComponent<SpriteRenderer>().sprite = cardFront;
-                    }
+                    privateKnowledge = false;
+                    GetComponent<SpriteRenderer>().sprite = cardFront;
                 }
             }
+
         }
     }
 
@@ -154,23 +144,20 @@ public class Card : MonoBehaviour
     //To remove from play.
     public void Discard()
     {
-        if (deployed)
+        deployed = false;
+        discarded = true;
+        //GameObject duplicateCard = this.gameObject;
+        if (isPlayer1)
         {
-            deployed = false;
-            discarded = true;
-            //GameObject duplicateCard = this.gameObject;
-            if(isPlayer1)
-            {
-                GameManager.player1Discard.Add(this.gameObject);
-                GameManager.player1Hand.Remove(this.gameObject);
-            }
-            else
-            {
-                GameManager.player2Discard.Add(this.gameObject);
-                GameManager.player2Hand.Remove(this.gameObject);
-            }
-            transform.position = discardPile.transform.position;
-            //Destroy(this.gameObject);
+            GameManager.player1Discard.Add(this.gameObject);
+            GameManager.player1Hand.Remove(this.gameObject);
         }
+        else
+        {
+            GameManager.player2Discard.Add(this.gameObject);
+            GameManager.player2Hand.Remove(this.gameObject);
+        }
+        transform.position = discardPile.transform.position;
+        //Destroy(this.gameObject);
     }
 }

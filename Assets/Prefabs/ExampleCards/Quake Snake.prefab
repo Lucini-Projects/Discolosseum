@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8529025985370940518}
   m_Layer: 0
   m_Name: Quake Snake
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,9 +104,11 @@ MonoBehaviour:
   attack: 1
   defense: 0
   cardBack: {fileID: 21300000, guid: 9fd58290441c10f46b02864b354915ea, type: 3}
-  cardFront: {fileID: 0}
+  cardFront: {fileID: 21300000, guid: 8ac039a7c64f5984cbba7ca57a41120d, type: 3}
   isPlayer1: 0
+  canPlay: 0
   deployed: 0
+  privateKnowledge: 0
   discarded: 0
   PlayCard: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   PlaySovereignCard: {fileID: 8300000, guid: 437ceb4d88511744694ca1952bac838e, type: 3}
