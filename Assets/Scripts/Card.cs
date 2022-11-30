@@ -141,7 +141,10 @@ public class Card : MonoBehaviour
 
                         //Debug.Log("Pressed");
                         GameManager.currentEnergyPool -= energyCost;
-                        GameManager.switchToPlayer2 = true;
+                        if (!GameManager.player2Passed)
+                        {
+                            GameManager.switchToPlayer2 = true;
+                        }
                     }
                 }
             }

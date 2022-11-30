@@ -24,6 +24,8 @@ TagManager:
   - Details
   - Narration
   - Card
+  - Pass
+  - DebugElements
   layers:
   - Default
   - TransparentFX
