@@ -17,15 +17,24 @@ public class Card : MonoBehaviour
     public bool canPlay;
     public bool deployed;
     public bool privateKnowledge;
-    public bool discarded;
 
     GameObject discardPile;
 
     public AudioClip PlayCard;
     public AudioClip PlaySovereignCard;
 
+    public string status;
+
+    //error trap the ienumerator.
+    bool erased = false;
+
+    //used for other scripts assessing abilities.
+    public bool abilityUsed;
+
     void Start()
     {
+        status = "In Deck";
+
         if (isPlayer1)
         {
             discardPile = GameObject.FindWithTag("Player1DiscardPile");
@@ -38,44 +47,67 @@ public class Card : MonoBehaviour
 
     void Update()
     {
-        if (!discarded)
+        switch (status)
         {
-            if (isPlayer1)
-            {
-                privateKnowledge = false;
-                if (energyCost > GameManager.currentEnergyPool || deployed)
+            default:
+                break;
+            case "In Deck":
+                GetComponent<SpriteRenderer>().sprite = cardBack;
+                privateKnowledge = true;
+                break;
+            case "In Hand":
+                //Debug.Log("Called");
+                if (isPlayer1)
                 {
-                    canPlay = false;
-                    transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
-                }
-                else
-                {
-                    if (GameManager.currentlyPlayer1Turn && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
-                    {
-                        canPlay = true;
-                        transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
-                    }
-                    else
+                    GetComponent<SpriteRenderer>().sprite = cardFront;
+                    privateKnowledge = false;
+                    if (energyCost > GameManager.currentEnergyPool)
                     {
                         canPlay = false;
                         transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                     }
+                    else
+                    {
+                        if (GameManager.currentlyPlayer1Turn && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
+                        {
+                            canPlay = true;
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
+                        }
+                        else
+                        {
+                            canPlay = false;
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                        }
+                    }
                 }
-            }
-            else
-            {
-                if (!deployed)
+                else
                 {
                     GetComponent<SpriteRenderer>().sprite = cardBack;
                     privateKnowledge = true;
                 }
-                else
+                break;
+            case "On Field":
+                GetComponent<SpriteRenderer>().sprite = cardFront;
+                privateKnowledge = false;
+                canPlay = false;
+                deployed = true;
+                transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                break;
+            case "In Discard":
+                GetComponent<SpriteRenderer>().sprite = cardFront;
+                privateKnowledge = false;
+                transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                //Debug.Log("Called");
+                break;
+            case "Revived":
+                break;
+            case "Recycled":
+                if (!erased)
                 {
-                    privateKnowledge = false;
-                    GetComponent<SpriteRenderer>().sprite = cardFront;
+                    erased = true;
+                    StartCoroutine(Eraser());
                 }
-            }
-
+                break;
         }
     }
 
@@ -83,7 +115,7 @@ public class Card : MonoBehaviour
     {
         GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(670, 0);
         GameObject.FindWithTag("Details").GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
-        if (!discarded)
+        if (status == "In Hand")
         {
             if (GameManager.currentlyPlayer1Turn)
             {
@@ -104,8 +136,9 @@ public class Card : MonoBehaviour
                         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
                         deployed = true;
                         GameManager.player1Field.Add(this.gameObject);
+                        status = "On Field";
                         //GameManager.player1Hand.Remove(this.gameObject);
-                        
+
                         //Debug.Log("Pressed");
                         GameManager.currentEnergyPool -= energyCost;
                         GameManager.switchToPlayer2 = true;
@@ -135,6 +168,7 @@ public class Card : MonoBehaviour
         }
         //transform.position = new Vector2(transform.position.x, transform.position.y-10);
         deployed = true;
+        status = "On Field";
         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Enemy AI has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
         GameManager.currentEnergyPool -= energyCost;
         GameManager.player2Field.Add(this.gameObject);
@@ -144,8 +178,8 @@ public class Card : MonoBehaviour
     //To remove from play.
     public void Discard()
     {
+        status = "In Discard";
         deployed = false;
-        discarded = true;
         //GameObject duplicateCard = this.gameObject;
         if (isPlayer1)
         {
@@ -159,5 +193,18 @@ public class Card : MonoBehaviour
         }
         transform.position = discardPile.transform.position;
         //Destroy(this.gameObject);
+    }
+
+    public void AddToHand()
+    {
+        //Debug.Log("Called");
+        status = "In Hand";
+    }
+
+    IEnumerator Eraser()
+    {
+        Debug.Log(cardName + " should be destroyed now.");
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }

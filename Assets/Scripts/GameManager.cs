@@ -12,10 +12,12 @@ public delegate void StateChange();
 
 public class GameManager : MonoBehaviour
 {
-    public List<GameObject> player1Deck = new List<GameObject>();
+    public List<GameObject> cardPool = new List<GameObject>();
+
+    public static List<GameObject> player1Deck = new List<GameObject>();
     public static List<GameObject> player1Hand = new List<GameObject>();
 
-    public List<GameObject> player2Deck = new List<GameObject>();
+    public static List<GameObject> player2Deck = new List<GameObject>();
     public static List<GameObject> player2Hand = new List<GameObject>();
 
     public static List<GameObject> player1Field = new List<GameObject>();
@@ -23,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     public static List<GameObject> player1Discard = new List<GameObject>();
     public static List<GameObject> player2Discard = new List<GameObject>();
+
+    public static List<GameObject> player1Revived = new List<GameObject>();
+    public static List<GameObject> player2Revived = new List<GameObject>();
 
     public static bool player1Starts;
 
@@ -57,6 +62,9 @@ public class GameManager : MonoBehaviour
     public static bool opponentMove;
     bool stawp;
     bool stopOpponent;
+
+    //Used to trap the startup.
+    bool beginGame = false;
 
     string lastTookDamage = "";
 
@@ -101,13 +109,19 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
         gameState = GameState.GameStart;
+
+        foreach (GameObject go in cardPool)
+        {
+            player1Deck.Add(go);
+            player2Deck.Add(go);
+        }
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Called");
+            //Debug.Log("Called");
             Application.Quit();
         }
 
@@ -123,18 +137,12 @@ public class GameManager : MonoBehaviour
                     Debug.Log("This is a glitch. Fix it.");
                     break;
                 case GameState.GameStart:
-                    Shuffle(player1Deck);
-                    Shuffle(player2Deck);
-                    Draw4(player1Deck, player1Hand);
-                    Draw4(player2Deck, player2Hand);
-                    player1Health = 20;
-                    player2Health = 20;
-                    maxEnergyPool = 5;
-                    currentEnergyPool = maxEnergyPool;
-                    roundNumber = 1;
-                    gameState = GameState.Player1Turn;
-                    //Debug.Log("Switching GameState.");
-                    player1Starts = true;
+                    if (!beginGame)
+                    {
+                        beginGame = true;
+                        StartCoroutine(BeginGame());
+                    }
+
                     break;
                 case GameState.Player1Turn:
                     currentlyPlayer1Turn = true;
@@ -220,16 +228,19 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(player1Health < 0)
+        if (player1Health < 0)
         {
             player1Health = 0;
         }
-        if(player2Health < 0)
+        if (player2Health < 0)
         {
             player2Health = 0;
         }
         GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
         GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
+
+        GameObject.FindWithTag("Player1Discard").GetComponent<Text>().text = player1Discard.Count.ToString();
+        GameObject.FindWithTag("Player2Discard").GetComponent<Text>().text = player2Discard.Count.ToString();
 
         GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
         GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
@@ -283,65 +294,65 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Fix this glitch");
                 break;
             case "Player1":
-                if(player1Hand.Count == 0)
+                if (player1Hand.Count == 0)
                 {
-                    Debug.Log("Being Called");
-                    Draw3(player1Deck, player1Hand, player1Discard);
+                    //Debug.Log("Being Called");
+                    StartCoroutine(Draw3(player1Deck, player1Hand, player1Discard));
                 }
                 else
                 {
-                    Draw1(player1Deck, player1Hand, player1Discard);
-                    Draw1(player1Deck, player1Hand, player1Discard);
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
                 }
-                if(player2Hand.Count==0)
+                if (player2Hand.Count == 0)
                 {
-                    Debug.Log("Being Called");
-                    Draw3(player2Deck, player2Hand, player2Discard);
+                    //Debug.Log("Being Called");
+                    StartCoroutine(Draw3(player2Deck, player2Hand, player2Discard));
                 }
                 else
                 {
-                    Draw1(player2Deck, player2Hand, player2Discard);
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
                 }
                 break;
             case "Player2":
                 if (player1Hand.Count == 0)
                 {
-                    Debug.Log("Being Called");
-                    Draw3(player1Deck, player1Hand, player1Discard);
+                    //Debug.Log("Being Called");
+                    StartCoroutine(Draw3(player1Deck, player1Hand, player1Discard));
                 }
                 else
                 {
-                    Draw1(player1Deck, player1Hand, player1Discard);
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
                 }
                 if (player2Hand.Count == 0)
                 {
-                    Debug.Log("Being Called");
-                    Draw3(player2Deck, player2Hand, player2Discard);
+                    //Debug.Log("Being Called");
+                    StartCoroutine(Draw3(player2Deck, player2Hand, player2Discard));
                 }
                 else
                 {
-                    Draw1(player2Deck, player2Hand, player2Discard);
-                    Draw1(player2Deck, player2Hand, player2Discard);
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
                 }
                 break;
             case "Draw":
                 if (player1Hand.Count == 0)
                 {
-                    Debug.Log("Being Called");
-                    Draw3(player1Deck, player1Hand, player1Discard);
+                    //Debug.Log("Being Called");
+                    StartCoroutine(Draw3(player1Deck, player1Hand, player1Discard));
                 }
                 else
                 {
-                    Draw1(player1Deck, player1Hand, player1Discard);
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
                 }
                 if (player2Hand.Count == 0)
                 {
-                    Debug.Log("Being Called");
-                    Draw3(player2Deck, player2Hand, player2Discard);
+                    //Debug.Log("Being Called");
+                    StartCoroutine(Draw3(player2Deck, player2Hand, player2Discard));
                 }
                 else
                 {
-                    Draw1(player2Deck, player2Hand, player2Discard);
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
                 }
                 break;
         }
@@ -355,14 +366,14 @@ public class GameManager : MonoBehaviour
         int p1defense = 0;
         int p2defense = 0;
 
-        Debug.Log("Cards on player's Field: ");
+        //Debug.Log("Cards on player's Field: ");
         for (int i = 0; i < P1Field.Count; i++)
         {
             p1attack += P1Field[i].GetComponent<Card>().attack;
             p1defense += P1Field[i].GetComponent<Card>().defense;
         }
 
-        Debug.Log("Cards on enemy's Field: ");
+        //Debug.Log("Cards on enemy's Field: ");
         for (int i = 0; i < P2Field.Count; i++)
         {
             p2attack += P2Field[i].GetComponent<Card>().attack;
@@ -430,6 +441,18 @@ public class GameManager : MonoBehaviour
             }
             yield return new WaitForSeconds(.1f);
         }
+
+        for (int i = 0; i < player1Revived.Count; i++)
+        {
+            player1Revived[i].GetComponent<Card>().Discard();
+        }
+        player1Revived.Clear();
+
+        for (int i = 0; i < player2Revived.Count; i++)
+        {
+            player2Revived[i].GetComponent<Card>().Discard();
+        }
+        player2Revived.Clear();
 
         if (player1Health <= 0 || player2Health <= 0)
         {
@@ -529,19 +552,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Draw4(List<GameObject> Deck, List<GameObject> Hand)
+    void BuildDeck(List<GameObject> Deck)
+    {
+        for (int i = 0; i < Deck.Count; i++)
+        {
+            GameObject newCard = Instantiate(Deck[i], new Vector2(GameObject.FindWithTag("Player1Deck").transform.position.x, GameObject.FindWithTag("Player1Deck").transform.position.y), Quaternion.identity);
+        }
+    }
+
+    IEnumerator Draw4(List<GameObject> Deck, List<GameObject> Hand)
     {
         GetComponent<AudioSource>().clip = Draw4Cards;
         GetComponent<AudioSource>().Play();
         for (int i = 0; i < 4; i++)
         {
-            GameObject newCard = Instantiate(Deck[i], new Vector2(-20 + i * 10, -14), Quaternion.identity);
+            GameObject newCard = Instantiate(Deck[i], new Vector2(-20, -40), Quaternion.identity);
             Hand.Add(newCard);
             Deck.Remove(Deck[i]);
+
+            yield return new WaitForSeconds(.25f);
+            newCard.GetComponent<Card>().AddToHand();
         }
     }
 
-    void Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
+    IEnumerator Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
         GetComponent<AudioSource>().clip = Draw1Card;
         GetComponent<AudioSource>().Play();
@@ -549,46 +583,64 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < Discard.Count; i++)
             {
-                Discard[i].GetComponent<Card>().deployed = false;
-                Discard[i].GetComponent<Card>().canPlay = false;
-                Discard[i].GetComponent<Card>().privateKnowledge = false;
-                Discard[i].GetComponent<Card>().discarded = false;
-                Deck.Add(Discard[i]);
+                Deck.Add(Resources.Load("Prefabs/ExampleCards/" + Discard[i].GetComponent<Card>().cardName) as GameObject);
+                Discard[i].GetComponent<Card>().status = "Recycled";
             }
             Discard.Clear();
-            Debug.Log("No more cards in deck, shuffling discard pile into deck.");
+            //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
             Shuffle(Deck);
         }
-        GameObject newCard = Instantiate(Deck[0], new Vector2(-20, -14), Quaternion.identity);
+        GameObject newCard = Instantiate(Deck[0], new Vector2(-20, -40), Quaternion.identity);
         Hand.Add(newCard);
         Deck.Remove(Deck[0]);
+        yield return new WaitForSeconds(.25f);
+        newCard.GetComponent<Card>().AddToHand();
     }
 
-    void Draw3(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
+    IEnumerator Draw3(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
         GetComponent<AudioSource>().clip = Draw3Cards;
         GetComponent<AudioSource>().Play();
-        Debug.Log("No more cards in hand, drawing 3.");
+        //Debug.Log("No more cards in hand, drawing 3.");
         for (int j = 0; j < 3; j++)
         {
             if (Deck.Count == 0)
             {
                 for (int i = 0; i < Discard.Count; i++)
                 {
-                    Discard[i].GetComponent<Card>().deployed = false;
-                    Discard[i].GetComponent<Card>().canPlay = false;
-                    Discard[i].GetComponent<Card>().privateKnowledge = false;
-                    Discard[i].GetComponent<Card>().discarded = false;
-                    Deck.Add(Discard[i]);
+                    Deck.Add(Resources.Load("Prefabs/ExampleCards/" + Discard[i].GetComponent<Card>().cardName) as GameObject);
+                    Discard[i].GetComponent<Card>().status = "Recycled";
                 }
                 Discard.Clear();
-                Debug.Log("No more cards in deck, shuffling discard pile into deck.");
+                //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
                 Shuffle(Deck);
             }
-            GameObject newCard = Instantiate(Deck[j], new Vector2(-20, -14), Quaternion.identity);
+            GameObject newCard = Instantiate(Deck[j], new Vector2(-20, -40), Quaternion.identity);
             Hand.Add(newCard);
             Deck.Remove(Deck[j]);
+            yield return new WaitForSeconds(.25f);
+            newCard.GetComponent<Card>().AddToHand();
         }
+    }
+
+    IEnumerator BeginGame()
+    {
+        Shuffle(player1Deck);
+        //BuildDeck(player1Deck);
+        Shuffle(player2Deck);
+
+        StartCoroutine(Draw4(player1Deck, player1Hand));
+        StartCoroutine(Draw4(player2Deck, player2Hand));
+
+        player1Health = 20;
+        player2Health = 20;
+        maxEnergyPool = 5;
+        currentEnergyPool = maxEnergyPool;
+        roundNumber = 1;
+        gameState = GameState.Player1Turn;
+        //Debug.Log("Switching GameState.");
+        player1Starts = true;
+        yield return null;
     }
 
     void DistributeCardsinHand()
@@ -608,6 +660,10 @@ public class GameManager : MonoBehaviour
                     player1Hand[i].transform.position = new Vector2(first + i * 10, -28);
                 }
             }
+            for (int i = 0; i < player1Revived.Count; i++)
+            {
+                player1Revived[i].transform.position = new Vector2((first + player1Hand.Count * 10) + 10*(i+1), -14);
+            }
         }
         if (player2Hand.Count != 0)
         {
@@ -622,6 +678,10 @@ public class GameManager : MonoBehaviour
                 {
                     player2Hand[i].transform.position = new Vector2(second + i * 10, 28);
                 }
+            }
+            for (int i = 0; i < player2Revived.Count; i++)
+            {
+                player2Revived[i].transform.position = new Vector2((second + player2Hand.Count * 10) + 10 * (i + 1), 14);
             }
         }
     }

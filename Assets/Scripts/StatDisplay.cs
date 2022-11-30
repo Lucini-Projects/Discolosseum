@@ -21,24 +21,18 @@ public class StatDisplay : MonoBehaviour
             if(Attack)
             {
                 int attackTotal = 0;
-                for (int i = 0; i < GameManager.player1Hand.Count; i++)
+                for (int i = 0; i < GameManager.player1Field.Count; i++)
                 {
-                    if(GameManager.player1Hand[i].GetComponent<Card>().deployed)
-                    {
-                        attackTotal += GameManager.player1Hand[i].GetComponent<Card>().attack;
-                    }
+                    attackTotal += GameManager.player1Field[i].GetComponent<Card>().attack;
                 }
                 GetComponent<Text>().text = "Total Attack: " + attackTotal.ToString();
             }
             else
             {
                 int defenseTotal = 0;
-                for (int i = 0; i < GameManager.player1Hand.Count; i++)
+                for (int i = 0; i < GameManager.player1Field.Count; i++)
                 {
-                    if (GameManager.player1Hand[i].GetComponent<Card>().deployed)
-                    {
-                        defenseTotal += GameManager.player1Hand[i].GetComponent<Card>().defense;
-                    }
+                    defenseTotal += GameManager.player1Field[i].GetComponent<Card>().defense;
                 }
                 GetComponent<Text>().text = "Total Defense: " + defenseTotal.ToString();
             }
@@ -48,24 +42,18 @@ public class StatDisplay : MonoBehaviour
             if (Attack)
             {
                 int attackTotal = 0;
-                for (int i = 0; i < GameManager.player2Hand.Count; i++)
+                for (int i = 0; i < GameManager.player2Field.Count; i++)
                 {
-                    if (GameManager.player2Hand[i].GetComponent<Card>().deployed)
-                    {
-                        attackTotal += GameManager.player2Hand[i].GetComponent<Card>().attack;
-                    }
+                    attackTotal += GameManager.player2Field[i].GetComponent<Card>().attack;
                 }
                 GetComponent<Text>().text = "Total Attack: " + attackTotal.ToString();
             }
             else
             {
                 int defenseTotal = 0;
-                for (int i = 0; i < GameManager.player2Hand.Count; i++)
+                for (int i = 0; i < GameManager.player2Field.Count; i++)
                 {
-                    if (GameManager.player2Hand[i].GetComponent<Card>().deployed)
-                    {
-                        defenseTotal += GameManager.player2Hand[i].GetComponent<Card>().defense;
-                    }
+                    defenseTotal += GameManager.player2Field[i].GetComponent<Card>().defense;
                 }
                 GetComponent<Text>().text = "Total Defense: " + defenseTotal.ToString();
             }

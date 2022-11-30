@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 181250599223394073}
   - component: {fileID: 181250599223394054}
   - component: {fileID: 3954254298404246806}
+  - component: {fileID: 1189745126343112377}
   m_Layer: 0
   m_Name: Kalju
   m_TagString: Card
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181250599223394074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 24, z: 0}
+  m_LocalPosition: {x: -16, y: -28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5564688801974337020}
@@ -108,10 +109,10 @@ MonoBehaviour:
   isPlayer1: 0
   canPlay: 0
   deployed: 0
-  privateKnowledge: 0
-  discarded: 0
+  privateKnowledge: 1
   PlayCard: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   PlaySovereignCard: {fileID: 8300000, guid: 437ceb4d88511744694ca1952bac838e, type: 3}
+  status: 
 --- !u!65 &181250599223394054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -135,7 +136,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 437ceb4d88511744694ca1952bac838e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -221,6 +222,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1189745126343112377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181250599223394074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f883eaa5dc4582a41ab32cf8b7a89a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &426398529430196581
 PrefabInstance:
   m_ObjectHideFlags: 0

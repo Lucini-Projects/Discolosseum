@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 181250599223394075}
   - component: {fileID: 181250599223394073}
   - component: {fileID: 181250599223394054}
-  - component: {fileID: 7768853295127576586}
+  - component: {fileID: -4343002100149579238}
+  - component: {fileID: -2736155601095925669}
   m_Layer: 0
-  m_Name: Raivolope
+  m_Name: Mermakara
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,10 +29,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181250599223394074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: 24, z: 0}
+  m_LocalPosition: {x: 14, y: 28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1836205466065957060}
+  - {fileID: 4782503313393936165}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 1373394487
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 393ba85618fed644fa099d1a84afb0c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a6173e139d0ae24b8cce3777f73bc40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.75, y: 9.75}
+  m_Size: {x: 10, y: 14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,20 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0261b33f1161b439cb9e796f8856b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardName: Raivolope
+  cardName: Mermakara
   className: Common
-  energyCost: 3
-  attack: 4
+  energyCost: 2
+  attack: 2
   defense: 0
   cardBack: {fileID: 21300000, guid: 9fd58290441c10f46b02864b354915ea, type: 3}
-  cardFront: {fileID: 21300000, guid: 393ba85618fed644fa099d1a84afb0c9, type: 3}
+  cardFront: {fileID: 21300000, guid: 5a6173e139d0ae24b8cce3777f73bc40, type: 3}
   isPlayer1: 0
   canPlay: 0
   deployed: 0
-  privateKnowledge: 0
-  discarded: 0
+  privateKnowledge: 1
   PlayCard: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   PlaySovereignCard: {fileID: 8300000, guid: 437ceb4d88511744694ca1952bac838e, type: 3}
+  status: 
 --- !u!65 &181250599223394054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,7 +126,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 14, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!82 &7768853295127576586
+--- !u!82 &-4343002100149579238
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,7 +136,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -221,7 +222,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &5884202416321354845
+--- !u!114 &-2736155601095925669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181250599223394074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f883eaa5dc4582a41ab32cf8b7a89a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &760471323780631484
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -286,8 +299,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
---- !u!4 &1836205466065957060 stripped
+--- !u!4 &4782503313393936165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5247645534384663705, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
-  m_PrefabInstance: {fileID: 5884202416321354845}
+  m_PrefabInstance: {fileID: 760471323780631484}
   m_PrefabAsset: {fileID: 0}

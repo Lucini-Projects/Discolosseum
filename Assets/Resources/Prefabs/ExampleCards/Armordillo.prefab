@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 181250599223394075}
   - component: {fileID: 181250599223394073}
   - component: {fileID: 181250599223394054}
-  - component: {fileID: -8529025985370940518}
+  - component: {fileID: 6190374329886204597}
+  - component: {fileID: -7209053548465172342}
   m_Layer: 0
-  m_Name: Quake Snake
+  m_Name: Armordillo
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,10 +29,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181250599223394074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 8, z: 0}
+  m_LocalPosition: {x: -16, y: 28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1675961721589587016}
+  - {fileID: 6599178416353502880}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 1373394487
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8ac039a7c64f5984cbba7ca57a41120d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f78f41e1997196449993b842a59766c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.75, y: 9.75}
+  m_Size: {x: 10, y: 14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,20 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0261b33f1161b439cb9e796f8856b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardName: Quake Snake
+  cardName: Armordillo
   className: Common
-  energyCost: 1
-  attack: 1
-  defense: 0
+  energyCost: 2
+  attack: 0
+  defense: 3
   cardBack: {fileID: 21300000, guid: 9fd58290441c10f46b02864b354915ea, type: 3}
-  cardFront: {fileID: 21300000, guid: 8ac039a7c64f5984cbba7ca57a41120d, type: 3}
+  cardFront: {fileID: 21300000, guid: f78f41e1997196449993b842a59766c3, type: 3}
   isPlayer1: 0
   canPlay: 0
   deployed: 0
-  privateKnowledge: 0
-  discarded: 0
+  privateKnowledge: 1
   PlayCard: {fileID: 8300000, guid: ca2b0b8a93732e647a207eef44508c2f, type: 3}
   PlaySovereignCard: {fileID: 8300000, guid: 437ceb4d88511744694ca1952bac838e, type: 3}
+  status: 
 --- !u!65 &181250599223394054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,7 +126,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 14, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!82 &-8529025985370940518
+--- !u!82 &6190374329886204597
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,7 +222,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &6886381517062697169
+--- !u!114 &-7209053548465172342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181250599223394074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f883eaa5dc4582a41ab32cf8b7a89a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &1389250539048749625
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -280,14 +293,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5247645534384663705, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5247645534384663710, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
       propertyPath: m_Name
       value: Card Glow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
---- !u!4 &1675961721589587016 stripped
+--- !u!4 &6599178416353502880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5247645534384663705, guid: 195a611d3468e41ce8154ab2ae4d61e5, type: 3}
-  m_PrefabInstance: {fileID: 6886381517062697169}
+  m_PrefabInstance: {fileID: 1389250539048749625}
   m_PrefabAsset: {fileID: 0}

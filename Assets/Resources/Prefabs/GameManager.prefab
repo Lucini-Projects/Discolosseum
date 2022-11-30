@@ -44,36 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff15609ba52a4c4a8ec5ba5c2e34e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Deck:
+  cardPool:
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
+  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
+  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
+  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
   - {fileID: 181250599223394074, guid: 221e6d5f4f382744fa18ec8af5ec7705, type: 3}
-  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
-  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
-  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
-  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
-  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
-  - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
-  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
-  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
-  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
-  - {fileID: 181250599223394074, guid: 0edf416ae2084504ba670dad1bd86e8e, type: 3}
-  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
-  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
-  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
-  - {fileID: 181250599223394074, guid: df63ad6d135de244db2e4c2946a710fd, type: 3}
-  player2Deck:
-  - {fileID: 181250599223394074, guid: 221e6d5f4f382744fa18ec8af5ec7705, type: 3}
-  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
-  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
-  - {fileID: 181250599223394074, guid: 278bbab14f66208499cedd19376c525d, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
-  - {fileID: 181250599223394074, guid: d20d19742fe0d4b42a24c3f8fddf8222, type: 3}
   - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
   - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
   - {fileID: 181250599223394074, guid: 3068db77c46e3504badada1d13b00162, type: 3}
@@ -90,6 +69,7 @@ MonoBehaviour:
   Draw3Cards: {fileID: 8300000, guid: 8325cc51fc2892a41b504bce23f0b212, type: 3}
   Draw4Cards: {fileID: 8300000, guid: f4370210a2242cd43af86378ed3dc5c1, type: 3}
   SwitchRound: {fileID: 8300000, guid: ef3012ad8dd00a043baf5c8217f911be, type: 3}
+  Win: {fileID: 8300000, guid: 19dd9044b931f2f449e8c9f2282598fd, type: 3}
   P1TurnIndicator: {fileID: 0}
   P2TurnIndicator: {fileID: 0}
 --- !u!82 &2882528188362220864
