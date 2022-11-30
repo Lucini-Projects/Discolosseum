@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        P2TurnIndicator.SetActive(false);
         UIOn = GameObject.FindWithTag("DebugElements");
         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
         gameState = GameState.GameStart;
@@ -206,6 +207,7 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case GameState.NextRound:
+                    GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", false);
                     discard = false;
                     DrawingProcedure(lastTookDamage);
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Starting new Round."));
@@ -457,6 +459,8 @@ public class GameManager : MonoBehaviour
                 lastTookDamage = "Draw";
             }
         }
+
+        GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", true);
         player1Field.Clear();
         player2Field.Clear();
 
