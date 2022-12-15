@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
     public AudioClip Draw4Cards;
     public AudioClip SwitchRound;
     public AudioClip Win;
+    public AudioClip AddStat;
+    public AudioClip TakeDamage;
+    public AudioClip SwitchTurn;
 
     public static bool GameOver;
 
@@ -73,6 +76,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject P1TurnIndicator;
     public GameObject P2TurnIndicator;
+
+    public float damageCalcSpeed = .3f;
+
+    GameObject StatIcons;
 
     protected GameManager() { }
     public static GameManager instance = null;
@@ -110,8 +117,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        StatIcons = GameObject.FindWithTag("StatIcons");
+        StatIcons.SetActive(false);
+
         P2TurnIndicator.SetActive(false);
         UIOn = GameObject.FindWithTag("DebugElements");
+
+        Text[] textfields = UIOn.GetComponentsInChildren<Text>();
+        foreach (Text text in textfields)
+        {
+            text.enabled = false;
+        }
+
         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
         gameState = GameState.GameStart;
 
@@ -281,6 +298,8 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to Player 2."));
             opponentMove = false;
+            GetComponent<AudioSource>().clip = SwitchTurn;
+            GetComponent<AudioSource>().Play();
             gameState = GameState.Player2Turn;
         }
         else
@@ -305,6 +324,8 @@ public class GameManager : MonoBehaviour
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 1 is forced to pass."));
                     player1Passed = true;
                     opponentMove = false;
+                    GetComponent<AudioSource>().clip = SwitchTurn;
+                    GetComponent<AudioSource>().Play();
                     gameState = GameState.Player2Turn;
                 }
             }
@@ -391,24 +412,57 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DamageCalculation(List<GameObject> P1Field, List<GameObject> P2Field)
     {
+        StatIcons.SetActive(true);
+
+        GameObject.FindWithTag("P1IteratingAttack").GetComponent<Text>().text = 0.ToString();
+        GameObject.FindWithTag("P2IteratingAttack").GetComponent<Text>().text = 0.ToString();
+        GameObject.FindWithTag("P1IteratingDefense").GetComponent<Text>().text = 0.ToString();
+        GameObject.FindWithTag("P2IteratingDefense").GetComponent<Text>().text = 0.ToString();
+
         int damage = 0;
         int p1attack = 0;
         int p2attack = 0;
         int p1defense = 0;
         int p2defense = 0;
 
-        //Debug.Log("Cards on player's Field: ");
         for (int i = 0; i < P1Field.Count; i++)
         {
+            P1Field[i].transform.Find("Sword Glow").gameObject.SetActive(true);
             p1attack += P1Field[i].GetComponent<Card>().attack;
-            p1defense += P1Field[i].GetComponent<Card>().defense;
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            GameObject.FindWithTag("P1IteratingAttack").GetComponent<Text>().text = p1attack.ToString();
+            yield return new WaitForSeconds(damageCalcSpeed);
         }
 
-        //Debug.Log("Cards on enemy's Field: ");
         for (int i = 0; i < P2Field.Count; i++)
         {
+            P2Field[i].transform.Find("Sword Glow").gameObject.SetActive(true);
             p2attack += P2Field[i].GetComponent<Card>().attack;
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            GameObject.FindWithTag("P2IteratingAttack").GetComponent<Text>().text = p2attack.ToString();
+            yield return new WaitForSeconds(damageCalcSpeed);
+        }
+
+        for (int i = 0; i < P1Field.Count; i++)
+        {
+            P1Field[i].transform.Find("Shield Glow").gameObject.SetActive(true);
+            p1defense += P1Field[i].GetComponent<Card>().defense;
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            GameObject.FindWithTag("P1IteratingDefense").GetComponent<Text>().text = p1defense.ToString();
+            yield return new WaitForSeconds(damageCalcSpeed);
+        }
+
+        for (int i = 0; i < P2Field.Count; i++)
+        {
+            P2Field[i].transform.Find("Shield Glow").gameObject.SetActive(true);
             p2defense += P2Field[i].GetComponent<Card>().defense;
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            GameObject.FindWithTag("P2IteratingDefense").GetComponent<Text>().text = p2defense.ToString();
+            yield return new WaitForSeconds(damageCalcSpeed);
         }
 
         int modifiedP1attack = 0;
@@ -416,19 +470,39 @@ public class GameManager : MonoBehaviour
         if (p1attack - p2defense <= 0)
         {
             modifiedP1attack = 0;
+            GameObject.FindWithTag("P1IteratingAttack").GetComponent<Text>().text = modifiedP1attack.ToString();
+            GameObject.FindWithTag("P2IteratingDefense").GetComponent<Text>().text = 0.ToString();
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(damageCalcSpeed);
         }
         else
         {
             modifiedP1attack = p1attack - p2defense;
+            GameObject.FindWithTag("P1IteratingAttack").GetComponent<Text>().text = modifiedP1attack.ToString();
+            GameObject.FindWithTag("P2IteratingDefense").GetComponent<Text>().text = 0.ToString();
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(damageCalcSpeed);
         }
 
         if (p2attack - p1defense <= 0)
         {
             modifiedP2attack = 0;
+            GameObject.FindWithTag("P2IteratingAttack").GetComponent<Text>().text = modifiedP2attack.ToString();
+            GameObject.FindWithTag("P1IteratingDefense").GetComponent<Text>().text = 0.ToString();
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(damageCalcSpeed);
         }
         else
         {
             modifiedP2attack = p2attack - p1defense;
+            GameObject.FindWithTag("P2IteratingAttack").GetComponent<Text>().text = modifiedP2attack.ToString();
+            GameObject.FindWithTag("P1IteratingDefense").GetComponent<Text>().text = 0.ToString();
+            GetComponent<AudioSource>().clip = AddStat;
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(damageCalcSpeed);
         }
 
         do
@@ -443,6 +517,10 @@ public class GameManager : MonoBehaviour
             player2Health -= damage;
             lastTookDamage = "Player2";
             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The round ends with player 2 taking " + damage.ToString() + " damage."));
+            yield return new WaitForSeconds(1);
+            GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", true);
+            GetComponent<AudioSource>().clip = TakeDamage;
+            GetComponent<AudioSource>().Play();
         }
         else
         {
@@ -452,6 +530,10 @@ public class GameManager : MonoBehaviour
                 player1Health -= damage;
                 lastTookDamage = "Player1";
                 StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The round ends with player 1 taking " + damage.ToString() + " damage."));
+                yield return new WaitForSeconds(1);
+                GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", true);
+                GetComponent<AudioSource>().clip = TakeDamage;
+                GetComponent<AudioSource>().Play();
             }
             else
             {
@@ -460,7 +542,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", true);
         player1Field.Clear();
         player2Field.Clear();
 
@@ -470,6 +551,8 @@ public class GameManager : MonoBehaviour
         {
             if (go.GetComponent<Card>().deployed)
             {
+                go.transform.Find("Sword Glow").gameObject.SetActive(false);
+                go.transform.Find("Shield Glow").gameObject.SetActive(false);
                 go.GetComponent<Card>().Discard();
             }
             yield return new WaitForSeconds(.1f);
@@ -477,15 +560,20 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < player1Revived.Count; i++)
         {
+            player1Revived[i].transform.Find("Sword Glow").gameObject.SetActive(false);
+            player1Revived[i].transform.Find("Shield Glow").gameObject.SetActive(false);
             player1Revived[i].GetComponent<Card>().Discard();
         }
         player1Revived.Clear();
 
         for (int i = 0; i < player2Revived.Count; i++)
         {
+            player2Revived[i].transform.Find("Sword Glow").gameObject.SetActive(false);
+            player2Revived[i].transform.Find("Shield Glow").gameObject.SetActive(false);
             player2Revived[i].GetComponent<Card>().Discard();
         }
         player2Revived.Clear();
+        StatIcons.SetActive(false);
 
         if (player1Health <= 0 || player2Health <= 0)
         {
@@ -531,6 +619,10 @@ public class GameManager : MonoBehaviour
         }
         if (elligibleChoices.Count > 0)
         {
+            do
+            {
+                yield return null;
+            } while (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping);
             elligibleChoices[Random.Range(0, elligibleChoices.Count)].GetComponent<Card>().Deploy();
         }
         else
@@ -562,6 +654,8 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 has passed. Switching to player 1."));
+                    GetComponent<AudioSource>().clip = SwitchTurn;
+                    GetComponent<AudioSource>().Play();
                     gameState = GameState.Player1Turn;
                 }
             }
@@ -607,24 +701,27 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
-        GetComponent<AudioSource>().clip = Draw1Card;
-        GetComponent<AudioSource>().Play();
-        if (Deck.Count == 0)
+        if (Hand.Count < 5)
         {
-            for (int i = 0; i < Discard.Count; i++)
+            GetComponent<AudioSource>().clip = Draw1Card;
+            GetComponent<AudioSource>().Play();
+            if (Deck.Count == 0)
             {
-                Deck.Add(Resources.Load("Prefabs/ExampleCards/" + Discard[i].GetComponent<Card>().cardName) as GameObject);
-                Discard[i].GetComponent<Card>().status = "Recycled";
+                for (int i = 0; i < Discard.Count; i++)
+                {
+                    Deck.Add(Resources.Load("Prefabs/ActualCards/" + Discard[i].GetComponent<Card>().cardName) as GameObject);
+                    Discard[i].GetComponent<Card>().status = "Recycled";
+                }
+                Discard.Clear();
+                //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
+                Shuffle(Deck);
             }
-            Discard.Clear();
-            //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
-            Shuffle(Deck);
+            GameObject newCard = Instantiate(Deck[0], new Vector2(-20, -40), Quaternion.identity);
+            Hand.Add(newCard);
+            Deck.Remove(Deck[0]);
+            yield return new WaitForSeconds(.25f);
+            newCard.GetComponent<Card>().AddToHand();
         }
-        GameObject newCard = Instantiate(Deck[0], new Vector2(-20, -40), Quaternion.identity);
-        Hand.Add(newCard);
-        Deck.Remove(Deck[0]);
-        yield return new WaitForSeconds(.25f);
-        newCard.GetComponent<Card>().AddToHand();
     }
 
     IEnumerator BeginGame()
@@ -652,18 +749,22 @@ public class GameManager : MonoBehaviour
         int deployed2 = 0;
         if (player1Hand.Count != 0)
         {
-            int first = (-8 * player1Hand.Count) / 2;
+            int first = -20;
+            int bottomRow = 0;
+            int topRow = 0;
             for (int i = 0; i < player1Hand.Count; i++)
             {
                 player1Hand[i].GetComponent<Card>().isPlayer1 = true;
                 if (player1Hand[i].GetComponent<Card>().deployed)
                 {
-                    player1Hand[i].transform.position = new Vector2(first + i * 10, -14);
+                    topRow++;
+                    player1Hand[i].transform.position = new Vector2(first + topRow * 10, -14);
                     deployed1++;
                 }
                 else
                 {
-                    player1Hand[i].transform.position = new Vector2(first + i * 10, -28);
+                    bottomRow++;
+                    player1Hand[i].transform.position = new Vector2(first + bottomRow * 10, -28);
                 }
             }
             for (int i = 0; i < player1Revived.Count; i++)
@@ -673,17 +774,21 @@ public class GameManager : MonoBehaviour
         }
         if (player2Hand.Count != 0)
         {
-            int second = (-8 * player2Hand.Count) / 2;
+            int second = -20;
+            int bottomRow = 0;
+            int topRow = 0;
             for (int i = 0; i < player2Hand.Count; i++)
             {
                 if (player2Hand[i].GetComponent<Card>().deployed)
                 {
-                    player2Hand[i].transform.position = new Vector2(second + i * 10, 14);
+                    topRow++;
+                    player2Hand[i].transform.position = new Vector2(second + topRow * 10, 14);
                     deployed2++;
                 }
                 else
                 {
-                    player2Hand[i].transform.position = new Vector2(second + i * 10, 28);
+                    bottomRow++;
+                    player2Hand[i].transform.position = new Vector2(second + bottomRow * 10, 28);
                 }
             }
             for (int i = 0; i < player2Revived.Count; i++)

@@ -27,6 +27,11 @@ TagManager:
   - Pass
   - DebugElements
   - DamageAnimation
+  - P1IteratingAttack
+  - P2IteratingAttack
+  - P1IteratingDefense
+  - P2IteratingDefense
+  - StatIcons
   layers:
   - Default
   - TransparentFX

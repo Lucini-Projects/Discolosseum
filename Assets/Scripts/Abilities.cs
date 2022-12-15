@@ -87,7 +87,7 @@ public class Abilities : MonoBehaviour
                         GameManager.player1Discard[i].GetComponent<Card>().status = "Revived";
                         GameManager.player1Field.Add(GameManager.player1Discard[i]);
                         GameManager.player1Revived.Add(GameManager.player1Discard[i]);
-                        Revive(GameManager.player1Discard[i], GameManager.player1Discard);
+                        //StartCoroutine(Revive(GameManager.player1Discard[i], GameManager.player1Discard));
                         GameManager.player1Discard.Remove(GameManager.player1Discard[i]);
                     }
                 }
@@ -104,6 +104,7 @@ public class Abilities : MonoBehaviour
                         GameManager.player2Discard[i].GetComponent<Card>().status = "Revived";
                         GameManager.player2Field.Add(GameManager.player2Discard[i]);
                         GameManager.player2Revived.Add(GameManager.player2Discard[i]);
+                        //StartCoroutine(Revive(GameManager.player2Discard[i], GameManager.player2Discard));
                         GameManager.player2Discard.Remove(GameManager.player2Discard[i]);
                     }
                 }
@@ -126,8 +127,9 @@ public class Abilities : MonoBehaviour
                         GameManager.player1Discard[i].GetComponent<Card>().abilityUsed = false;
                         GameManager.player1Field.Add(GameManager.player1Discard[i]);
                         GameManager.player1Revived.Add(GameManager.player1Discard[i]);
-                        Revive(GameManager.player1Discard[i], GameManager.player1Discard);
+                        //StartCoroutine(Revive(GameManager.player1Discard[i], GameManager.player1Discard));
                         GameManager.player1Discard.Remove(GameManager.player1Discard[i]);
+
                     }
                 }
             }
@@ -144,6 +146,7 @@ public class Abilities : MonoBehaviour
                         GameManager.player2Discard[i].GetComponent<Card>().abilityUsed = false;
                         GameManager.player2Field.Add(GameManager.player2Discard[i]);
                         GameManager.player2Revived.Add(GameManager.player2Discard[i]);
+                        //(Revive(GameManager.player2Discard[i], GameManager.player2Discard));
                         GameManager.player2Discard.Remove(GameManager.player2Discard[i]);
                     }
                 }

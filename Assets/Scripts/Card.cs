@@ -113,8 +113,10 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
+
         GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(670, 0);
         GameObject.FindWithTag("Details").GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
+
         if (status == "In Hand")
         {
             if (GameManager.currentlyPlayer1Turn)
@@ -125,11 +127,15 @@ public class Card : MonoBehaviour
                     {
                         if (className == "Sovereign")
                         {
+                            transform.Find("Shockwave2").GetComponent<Animator>().SetBool("V2 Card Played", true);
+                            StartCoroutine(ShutOffShockwave());
                             GetComponent<AudioSource>().clip = PlaySovereignCard;
                             GetComponent<AudioSource>().Play();
                         }
                         else
                         {
+                            transform.Find("Shockwave1").GetComponent<Animator>().SetBool("V1 Card Played", true);
+                            StartCoroutine(ShutOffShockwave());
                             GetComponent<AudioSource>().clip = PlayCard;
                             GetComponent<AudioSource>().Play();
                         }
@@ -151,6 +157,19 @@ public class Card : MonoBehaviour
         }
     }
 
+    IEnumerator ShutOffShockwave()
+    {
+        yield return new WaitForSeconds(1);
+        if (cardName == "Kalju")
+        {
+            transform.Find("Shockwave2").GetComponent<Animator>().SetBool("V2 Card Played", false);
+        }
+        else
+        {
+            transform.Find("Shockwave1").GetComponent<Animator>().SetBool("V1 Card Played", false);
+        }
+    }
+
     void OnMouseExit()
     {
         GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(670, 1000);
@@ -161,11 +180,15 @@ public class Card : MonoBehaviour
     {
         if (className == "Sovereign")
         {
+            transform.Find("Shockwave2").GetComponent<Animator>().SetBool("V2 Card Played", true);
+            StartCoroutine(ShutOffShockwave());
             GetComponent<AudioSource>().clip = PlaySovereignCard;
             GetComponent<AudioSource>().Play();
         }
         else
         {
+            transform.Find("Shockwave1").GetComponent<Animator>().SetBool("V1 Card Played", true);
+            StartCoroutine(ShutOffShockwave());
             GetComponent<AudioSource>().clip = PlayCard;
             GetComponent<AudioSource>().Play();
         }
