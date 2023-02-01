@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     bool stopOpponent;
 
     //Switches based on play mode; pvp or p vs ai
-    public static bool PVP;
+    public static bool PVP = true;
 
     GameObject UIOn;
     bool onOff = true;
@@ -223,7 +223,12 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Waiting on Manual Input from the other player");
+                        if (!switchToPlayer2)
+                        {
+                            opponentMove = true;
+                            gameState = GameState.Player1Turn;
+                        }
+                        //Debug.Log("Waiting on Manual Input from the other player");
                     }
                     break;
                 case GameState.EndRound:

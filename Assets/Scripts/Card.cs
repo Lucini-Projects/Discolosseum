@@ -57,7 +57,7 @@ public class Card : MonoBehaviour
                 break;
             case "In Hand":
                 //Debug.Log("Called");
-                if (isPlayer1)
+                if (!GameManager.PVP && isPlayer1 || GameManager.PVP && GameManager.currentlyPlayer1Turn && isPlayer1 || GameManager.PVP && !GameManager.currentlyPlayer1Turn && !isPlayer1) 
                 {
                     GetComponent<SpriteRenderer>().sprite = cardFront;
                     privateKnowledge = false;
@@ -68,21 +68,17 @@ public class Card : MonoBehaviour
                     }
                     else
                     {
-                        if (GameManager.currentlyPlayer1Turn && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
+                        if (!GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
                         {
                             canPlay = true;
                             transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
-                        }
-                        else
-                        {
-                            canPlay = false;
-                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                         }
                     }
                 }
                 else
                 {
                     GetComponent<SpriteRenderer>().sprite = cardBack;
+                    transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                     privateKnowledge = true;
                 }
                 break;
@@ -113,13 +109,12 @@ public class Card : MonoBehaviour
 
     void OnMouseOver()
     {
-
         GameObject.FindWithTag("Details").GetComponent<RectTransform>().anchoredPosition = new Vector2(670, 0);
         GameObject.FindWithTag("Details").GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
 
         if (status == "In Hand")
         {
-            if (GameManager.currentlyPlayer1Turn)
+            if (!GameManager.PVP && isPlayer1 || GameManager.PVP && GameManager.currentlyPlayer1Turn && isPlayer1 || GameManager.PVP && !GameManager.currentlyPlayer1Turn && !isPlayer1)
             {
                 if (!privateKnowledge)
                 {
@@ -141,15 +136,30 @@ public class Card : MonoBehaviour
                         }
                         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
                         deployed = true;
-                        GameManager.player1Field.Add(this.gameObject);
+                        if (GameManager.currentlyPlayer1Turn)
+                        {
+                            GameManager.player1Field.Add(this.gameObject);
+                        }
+                        else
+                        {
+                            GameManager.player2Field.Add(this.gameObject);
+                        }
                         status = "On Field";
                         //GameManager.player1Hand.Remove(this.gameObject);
 
                         //Debug.Log("Pressed");
                         GameManager.currentEnergyPool -= energyCost;
-                        if (!GameManager.player2Passed)
+
+                        if (GameManager.PVP)
                         {
-                            GameManager.switchToPlayer2 = true;
+                            GameManager.switchToPlayer2 = !GameManager.switchToPlayer2;
+                        }
+                        else
+                        {
+                            if (!GameManager.player2Passed)
+                            {
+                                GameManager.switchToPlayer2 = true;
+                            }
                         }
                     }
                 }
