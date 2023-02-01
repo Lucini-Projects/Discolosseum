@@ -66,6 +66,9 @@ public class GameManager : MonoBehaviour
     bool stawp;
     bool stopOpponent;
 
+    //Switches based on play mode; pvp or p vs ai
+    public static bool PVP;
+
     GameObject UIOn;
     bool onOff = true;
 
@@ -199,21 +202,28 @@ public class GameManager : MonoBehaviour
                     break;
                 case GameState.Player2Turn:
                     currentlyPlayer1Turn = false;
-                    if (!stopOpponent)
+                    if (!PVP)
                     {
-                        if (player1Passed && player2Passed)
+                        if (!stopOpponent)
                         {
-                            stopOpponent = true;
-                            //StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                            gameState = GameState.EndRound;
-                        }
-                        else
-                        {
-                            if (!opponentMove)
+                            if (player1Passed && player2Passed)
                             {
-                                StartCoroutine(AITurn());
+                                stopOpponent = true;
+                                //StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                                gameState = GameState.EndRound;
+                            }
+                            else
+                            {
+                                if (!opponentMove)
+                                {
+                                    StartCoroutine(AITurn());
+                                }
                             }
                         }
+                    }
+                    else
+                    {
+                        Debug.Log("Waiting on Manual Input from the other player");
                     }
                     break;
                 case GameState.EndRound:
@@ -716,7 +726,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
                 Shuffle(Deck);
             }
-            GameObject newCard = Instantiate(Deck[0], new Vector2(-20, -40), Quaternion.identity);
+            GameObject newCard = Instantiate(Deck[0], new Vector2(-40, -40), Quaternion.identity);
             Hand.Add(newCard);
             Deck.Remove(Deck[0]);
             yield return new WaitForSeconds(.25f);
