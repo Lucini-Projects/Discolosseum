@@ -68,7 +68,12 @@ public class Card : MonoBehaviour
                     }
                     else
                     {
-                        if (!GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
+                        if (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
+                        {
+                           canPlay = false;
+                           transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                        }
+                        else
                         {
                             canPlay = true;
                             transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", true);
@@ -120,6 +125,7 @@ public class Card : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0) && canPlay && !deployed)
                     {
+                        GameManager.pickMe = true;
                         if (className == "Sovereign")
                         {
                             transform.Find("Shockwave2").GetComponent<Animator>().SetBool("V2 Card Played", true);
