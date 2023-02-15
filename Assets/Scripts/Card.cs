@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
+using Mirror;
 
-public class Card : MonoBehaviour
+public class Card : NetworkBehaviour
 {
     public string cardName;
     public string className;
