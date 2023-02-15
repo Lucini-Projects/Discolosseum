@@ -61,7 +61,7 @@ public class Card : MonoBehaviour
                 {
                     GetComponent<SpriteRenderer>().sprite = cardFront;
                     privateKnowledge = false;
-                    if (energyCost > GameManager.currentEnergyPool)
+                    if (GameManager.PVP && energyCost > GameManager.currentEnergyPool || !GameManager.PVP && (energyCost > GameManager.currentEnergyPool || !GameManager.currentlyPlayer1Turn))
                     {
                         canPlay = false;
                         transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);

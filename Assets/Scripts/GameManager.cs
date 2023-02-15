@@ -186,7 +186,8 @@ public class GameManager : MonoBehaviour
                     currentlyPlayer1Turn = true;
                     if(!player1Passed)
                     {
-                        GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = true;
+                        //Temporarily set to false
+                        GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     }
                     else
                     {
@@ -244,7 +245,8 @@ public class GameManager : MonoBehaviour
                         currentlyPlayer1Turn = false;
                         if (!player2Passed)
                         {
-                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = true;
+                            //Temporarily changed this to false to revisit later
+                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                         }
                         else
                         {
@@ -355,57 +357,83 @@ public class GameManager : MonoBehaviour
     {
         P1TurnIndicator.SetActive(true);
         P2TurnIndicator.SetActive(false);
-        if (player1Passed)
+
+        //Error Trapping cards if neither player has useable cards.
+        List<GameObject> elligibleToPlay = new List<GameObject>();
+        for (int i = 0; i < player1Hand.Count; i++)
         {
-            if (player2Passed)
+            if (player1Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player1Hand[i].GetComponent<Card>().deployed)
             {
-                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                GetComponent<AudioSource>().clip = SwitchRound;
-                GetComponent<AudioSource>().Play();
-                gameState = GameState.EndRound;
+                elligibleToPlay.Add(player1Hand[i]);
             }
-            else
+        }
+
+        for (int i = 0; i < player2Hand.Count; i++)
+        {
+            if (player2Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player2Hand[i].GetComponent<Card>().deployed)
             {
-                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to Player 2."));
-                GetComponent<AudioSource>().clip = SwitchTurn;
-                GetComponent<AudioSource>().Play();
-                gameState = GameState.Player2Turn;
+                elligibleToPlay.Add(player2Hand[i]);
             }
-            //opponentMove = false;
+        }
+
+        if (elligibleToPlay.Count < 1)
+        {
+            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible. Ending Round."));
+            gameState = GameState.EndRound;
         }
         else
         {
-
-            if (switchToPlayer2)
+            if (player1Passed)
             {
-                opponentMove = false;
-                gameState = GameState.Player2Turn;
+                if (player2Passed)
+                {
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                    GetComponent<AudioSource>().clip = SwitchRound;
+                    GetComponent<AudioSource>().Play();
+                    gameState = GameState.EndRound;
+                }
+                else
+                {
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to Player 2."));
+                    GetComponent<AudioSource>().clip = SwitchTurn;
+                    GetComponent<AudioSource>().Play();
+                    gameState = GameState.Player2Turn;
+                }
+                //opponentMove = false;
             }
             else
             {
-
-                List<GameObject> elligible = new List<GameObject>();
-                for (int i = 0; i < player1Hand.Count; i++)
+                if (switchToPlayer2)
                 {
-                    if (player1Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player1Hand[i].GetComponent<Card>().deployed)
-                    {
-                        elligible.Add(player1Hand[i]);
-                    }
+                    opponentMove = false;
+                    gameState = GameState.Player2Turn;
                 }
-                if (elligible.Count == 0)
+                else
                 {
-                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 1 is forced to pass."));
-                    player1Passed = true;
-                    //opponentMove = false;
-                    GetComponent<AudioSource>().clip = SwitchTurn;
-                    GetComponent<AudioSource>().Play();
-                    if (currentEnergyPool > 0)
+
+                    List<GameObject> elligible = new List<GameObject>();
+                    for (int i = 0; i < player1Hand.Count; i++)
                     {
-                        gameState = GameState.Player2Turn;
+                        if (player1Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player1Hand[i].GetComponent<Card>().deployed)
+                        {
+                            elligible.Add(player1Hand[i]);
+                        }
                     }
-                    else
+                    if (elligible.Count == 0)
                     {
-                        gameState = GameState.EndRound;
+                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 1 is forced to pass."));
+                        player1Passed = true;
+                        //opponentMove = false;
+                        GetComponent<AudioSource>().clip = SwitchTurn;
+                        GetComponent<AudioSource>().Play();
+                        if (currentEnergyPool > 0)
+                        {
+                            gameState = GameState.Player2Turn;
+                        }
+                        else
+                        {
+                            gameState = GameState.EndRound;
+                        }
                     }
                 }
             }
@@ -417,57 +445,83 @@ public class GameManager : MonoBehaviour
     {
         P1TurnIndicator.SetActive(false);
         P2TurnIndicator.SetActive(true);
-        if (player2Passed)
-        {
-            if (player1Passed)
-            {
 
-                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                GetComponent<AudioSource>().clip = SwitchRound;
-                GetComponent<AudioSource>().Play();
-                gameState = GameState.EndRound;
-            }
-            else
+        //Error Trapping cards if neither player has useable cards.
+        List<GameObject> elligibleToPlay = new List<GameObject>();
+        for (int i = 0; i < player1Hand.Count; i++)
+        {
+            if (player1Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player1Hand[i].GetComponent<Card>().deployed)
             {
-                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 has passed. Switching to Player 1."));
-                opponentMove = true;
-                GetComponent<AudioSource>().clip = SwitchTurn;
-                GetComponent<AudioSource>().Play();
-                gameState = GameState.Player1Turn;
+                elligibleToPlay.Add(player1Hand[i]);
             }
-            //opponentMove = false;
+        }
+
+        for (int i = 0; i < player2Hand.Count; i++)
+        {
+            if (player2Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player2Hand[i].GetComponent<Card>().deployed)
+            {
+                elligibleToPlay.Add(player2Hand[i]);
+            }
+        }
+
+        if (elligibleToPlay.Count < 1)
+        {
+            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible. Ending Round."));
+            gameState = GameState.EndRound;
         }
         else
         {
-            if (!switchToPlayer2)
+            if (player2Passed)
             {
-                opponentMove = true;
-                gameState = GameState.Player1Turn;
+                if (player2Passed)
+                {
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                    GetComponent<AudioSource>().clip = SwitchRound;
+                    GetComponent<AudioSource>().Play();
+                    gameState = GameState.EndRound;
+                }
+                else
+                {
+                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 has passed. Switching to Player 1."));
+                    GetComponent<AudioSource>().clip = SwitchTurn;
+                    GetComponent<AudioSource>().Play();
+                    gameState = GameState.Player1Turn;
+                }
+                //opponentMove = false;
             }
             else
             {
-                List<GameObject> elligible = new List<GameObject>();
-                for (int i = 0; i < player1Hand.Count; i++)
+                if (!switchToPlayer2)
                 {
-                    if (player2Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player2Hand[i].GetComponent<Card>().deployed)
-                    {
-                        elligible.Add(player2Hand[i]);
-                    }
+                    opponentMove = true;
+                    gameState = GameState.Player1Turn;
                 }
-                if (elligible.Count == 0)
+                else
                 {
-                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 2 is forced to pass."));
-                    player2Passed = true;
-                    //opponentMove = true;
-                    GetComponent<AudioSource>().clip = SwitchTurn;
-                    GetComponent<AudioSource>().Play();
-                    if (currentEnergyPool > 0)
+
+                    List<GameObject> elligible = new List<GameObject>();
+                    for (int i = 0; i < player1Hand.Count; i++)
                     {
-                        gameState = GameState.Player1Turn;
+                        if (player2Hand[i].GetComponent<Card>().energyCost <= currentEnergyPool && !player2Hand[i].GetComponent<Card>().deployed)
+                        {
+                            elligible.Add(player2Hand[i]);
+                        }
                     }
-                    else
+                    if (elligible.Count == 0)
                     {
-                        gameState = GameState.EndRound;
+                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 2 is forced to pass."));
+                        player2Passed = true;
+                        //opponentMove = false;
+                        GetComponent<AudioSource>().clip = SwitchTurn;
+                        GetComponent<AudioSource>().Play();
+                        if (currentEnergyPool > 0)
+                        {
+                            gameState = GameState.Player1Turn;
+                        }
+                        else
+                        {
+                            gameState = GameState.EndRound;
+                        }
                     }
                 }
             }
@@ -843,7 +897,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
-        if (Hand.Count < 5)
+        if (Hand.Count < 6)
         {
             GetComponent<AudioSource>().clip = Draw1Card;
             GetComponent<AudioSource>().Play();
@@ -858,7 +912,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
                 Shuffle(Deck);
             }
-            GameObject newCard = Instantiate(Deck[0], new Vector2(-40, -40), Quaternion.identity);
+            GameObject newCard = Instantiate(Deck[0], new Vector2(-100, -100), Quaternion.identity);
             Hand.Add(newCard);
             Deck.Remove(Deck[0]);
             yield return new WaitForSeconds(.25f);
@@ -891,7 +945,7 @@ public class GameManager : MonoBehaviour
         int deployed2 = 0;
         if (player1Hand.Count != 0)
         {
-            int first = -20;
+            int first = -25;
             int bottomRow = 0;
             int topRow = 0;
             for (int i = 0; i < player1Hand.Count; i++)
@@ -916,7 +970,7 @@ public class GameManager : MonoBehaviour
         }
         if (player2Hand.Count != 0)
         {
-            int second = -20;
+            int second = -25;
             int bottomRow = 0;
             int topRow = 0;
             for (int i = 0; i < player2Hand.Count; i++)
