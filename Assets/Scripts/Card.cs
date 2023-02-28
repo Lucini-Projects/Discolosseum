@@ -125,7 +125,7 @@ public class Card : NetworkBehaviour
             {
                 if (!privateKnowledge)
                 {
-                    if (Input.GetMouseButtonDown(0) && canPlay && !deployed)
+                    if (Input.GetMouseButtonDown(0) && canPlay && !deployed && this.isLocalPlayer)
                     {
                         GameManager.pickMe = true;
                         if (className == "Sovereign")

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
-    GameStart, Player1Turn, Player2Turn, EndRound, Discard, NextRound, GameEnd
+    MainMenu, GameStart, Player1Turn, Player2Turn, EndRound, Discard, NextRound, GameEnd
 }
 
 public delegate void StateChange();
@@ -123,25 +124,40 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StatIcons = GameObject.FindWithTag("StatIcons");
-        StatIcons.SetActive(false);
+        Scene scene = SceneManager.GetActiveScene();
 
-        P2TurnIndicator.SetActive(false);
-        UIOn = GameObject.FindWithTag("DebugElements");
-
-        Text[] textfields = UIOn.GetComponentsInChildren<Text>();
-        foreach (Text text in textfields)
+        switch (scene.name)
         {
-            text.enabled = false;
-        }
+            default:
+                Debug.Log("Fix this glitch.");
+                break;
+            case "Title":
+                gameState = GameState.MainMenu;
+                break;
+            case "MainGameLoop":
+                gameState = GameState.GameStart;
+                // Check if the name of the current Active Scene is your first Scene.
+                StatIcons = GameObject.FindWithTag("StatIcons");
+                StatIcons.SetActive(false);
 
-        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
-        gameState = GameState.GameStart;
+                P2TurnIndicator.SetActive(false);
+                UIOn = GameObject.FindWithTag("DebugElements");
 
-        foreach (GameObject go in cardPool)
-        {
-            player1Deck.Add(go);
-            player2Deck.Add(go);
+                Text[] textfields = UIOn.GetComponentsInChildren<Text>();
+                foreach (Text text in textfields)
+                {
+                    text.enabled = false;
+                }
+
+                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
+                gameState = GameState.GameStart;
+
+                foreach (GameObject go in cardPool)
+                {
+                    player1Deck.Add(go);
+                    player2Deck.Add(go);
+                }
+                break;
         }
     }
 
@@ -153,204 +169,215 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad7))
+        Scene scene = SceneManager.GetActiveScene();
+        switch (scene.name)
         {
-            Text[] textfields = UIOn.GetComponentsInChildren<Text>();
-            onOff = !onOff;
-            foreach (Text text in textfields)
-            {
-                text.enabled = onOff;
-            }
-        }
-
-        if (!GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
-        {
-
-            player1DeckCount = player1Deck.Count;
-            player2DeckCount = player2Deck.Count;
-
-            switch (gameState)
-            {
-                default:
-                    Debug.Log("This is a glitch. Fix it.");
-                    break;
-                case GameState.GameStart:
-                    if (!beginGame)
+            default:
+                Debug.Log("Fix this glitch.");
+                break;
+            case "Title":
+                //gameState = GameState.MainMenu;
+                break;
+            case "MainGameLoop":
+                if (Input.GetKeyDown(KeyCode.Keypad7))
+                {
+                    Text[] textfields = UIOn.GetComponentsInChildren<Text>();
+                    onOff = !onOff;
+                    foreach (Text text in textfields)
                     {
-                        beginGame = true;
-                        StartCoroutine(BeginGame());
+                        text.enabled = onOff;
                     }
+                }
 
-                    break;
-                case GameState.Player1Turn:
-                    currentlyPlayer1Turn = true;
-                    if(!player1Passed)
-                    {
-                        //Temporarily set to false
-                        GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
-                    }
-                    else
-                    {
-                        GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
-                    }
+                if (GameObject.FindGameObjectsWithTag("Narration").Length > 0 && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
+                {
+                    player1DeckCount = player1Deck.Count;
+                    player2DeckCount = player2Deck.Count;
 
-                    if (player1Passed && player2Passed)
+                    switch (gameState)
                     {
-                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                        gameState = GameState.EndRound;
-                    }
-                    else
-                    {
-                        if (!player1Passed)
-                        {
-                            Player1Turn();
-                        }
-                        else
-                        {
-                            if (currentEnergyPool > 0)
+                        default:
+                            Debug.Log("This is a glitch. Fix it.");
+                            break;
+                        case GameState.GameStart:
+                            if (!beginGame)
                             {
-                                gameState = GameState.Player2Turn;
+                                beginGame = true;
+                                StartCoroutine(BeginGame());
+                            }
+
+                            break;
+                        case GameState.Player1Turn:
+                            currentlyPlayer1Turn = true;
+                            if (!player1Passed)
+                            {
+                                //Temporarily set to false
+                                GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                             }
                             else
                             {
-                                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
-                                gameState = GameState.EndRound;
+                                GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                             }
-                        }
-                    }
-                    break;
-                case GameState.Player2Turn:
-                    currentlyPlayer1Turn = false;
-                    if (!PVP)
-                    {
-                        if (!stopOpponent)
-                        {
+
                             if (player1Passed && player2Passed)
                             {
-                                stopOpponent = true;
-                                //StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                                 gameState = GameState.EndRound;
                             }
                             else
                             {
-                                if (!opponentMove)
+                                if (!player1Passed)
                                 {
-                                    StartCoroutine(AITurn());
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        currentlyPlayer1Turn = false;
-                        if (!player2Passed)
-                        {
-                            //Temporarily changed this to false to revisit later
-                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
-                        }
-                        else
-                        {
-                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
-                        }
-
-                        if (player1Passed && player2Passed)
-                        {
-                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                            gameState = GameState.EndRound;
-                        }
-                        else
-                        {
-                            if (!player2Passed)
-                            {
-                                Player2Turn();
-                            }
-                            else
-                            {
-                                if (currentEnergyPool > 0)
-                                {
-                                    gameState = GameState.Player1Turn;
+                                    Player1Turn();
                                 }
                                 else
                                 {
-                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
-                                    gameState = GameState.EndRound;
+                                    if (currentEnergyPool > 0)
+                                    {
+                                        gameState = GameState.Player2Turn;
+                                    }
+                                    else
+                                    {
+                                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
+                                        gameState = GameState.EndRound;
+                                    }
                                 }
                             }
-                        }
+                            break;
+                        case GameState.Player2Turn:
+                            currentlyPlayer1Turn = false;
+                            if (!PVP)
+                            {
+                                if (!stopOpponent)
+                                {
+                                    if (player1Passed && player2Passed)
+                                    {
+                                        stopOpponent = true;
+                                        //StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                                        gameState = GameState.EndRound;
+                                    }
+                                    else
+                                    {
+                                        if (!opponentMove)
+                                        {
+                                            StartCoroutine(AITurn());
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                currentlyPlayer1Turn = false;
+                                if (!player2Passed)
+                                {
+                                    //Temporarily changed this to false to revisit later
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
+                                }
+                                else
+                                {
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
+                                }
+
+                                if (player1Passed && player2Passed)
+                                {
+                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                                    gameState = GameState.EndRound;
+                                }
+                                else
+                                {
+                                    if (!player2Passed)
+                                    {
+                                        Player2Turn();
+                                    }
+                                    else
+                                    {
+                                        if (currentEnergyPool > 0)
+                                        {
+                                            gameState = GameState.Player1Turn;
+                                        }
+                                        else
+                                        {
+                                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
+                                            gameState = GameState.EndRound;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case GameState.EndRound:
+                            stopOpponent = false;
+                            if (!stawp)
+                            {
+                                StartCoroutine(EndRound());
+                            }
+                            break;
+                        case GameState.NextRound:
+                            GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", false);
+                            discard = false;
+                            DrawingProcedure(lastTookDamage);
+                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Starting new Round."));
+                            GetComponent<AudioSource>().clip = SwitchRound;
+                            GetComponent<AudioSource>().Play();
+                            if (maxEnergyPool < 15)
+                            {
+                                maxEnergyPool++;
+                            }
+                            else
+                            {
+                                maxEnergyPool = 5;
+                            }
+                            currentEnergyPool = maxEnergyPool;
+                            roundNumber++;
+                            player1Starts = !player1Starts;
+                            if (player1Starts)
+                            {
+                                gameState = GameState.Player1Turn;
+                            }
+                            else
+                            {
+                                opponentMove = false;
+                                gameState = GameState.Player2Turn;
+                            }
+                            break;
+                        case GameState.GameEnd:
+                            if (!GameOver)
+                            {
+                                GetComponent<AudioSource>().clip = Win;
+                                GetComponent<AudioSource>().Play();
+                                if (player1Health <= 0)
+                                {
+                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 Wins!"));
+                                }
+                                if (player2Health <= 0)
+                                {
+                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 Wins!"));
+                                }
+                                GameOver = true;
+                            }
+                            break;
                     }
-                    break;
-                case GameState.EndRound:
-                    stopOpponent = false;
-                    if (!stawp)
-                    {
-                        StartCoroutine(EndRound());
-                    }
-                    break;
-                case GameState.NextRound:
-                    GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", false);
-                    discard = false;
-                    DrawingProcedure(lastTookDamage);
-                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Starting new Round."));
-                    GetComponent<AudioSource>().clip = SwitchRound;
-                    GetComponent<AudioSource>().Play();
-                    if (maxEnergyPool < 15)
-                    {
-                        maxEnergyPool++;
-                    }
-                    else
-                    {
-                        maxEnergyPool = 5;
-                    }
-                    currentEnergyPool = maxEnergyPool;
-                    roundNumber++;
-                    player1Starts = !player1Starts;
-                    if (player1Starts)
-                    {
-                        gameState = GameState.Player1Turn;
-                    }
-                    else
-                    {
-                        opponentMove = false;
-                        gameState = GameState.Player2Turn;
-                    }
-                    break;
-                case GameState.GameEnd:
-                    if (!GameOver)
-                    {
-                        GetComponent<AudioSource>().clip = Win;
-                        GetComponent<AudioSource>().Play();
-                        if (player1Health <= 0)
-                        {
-                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 Wins!"));
-                        }
-                        if (player2Health <= 0)
-                        {
-                            StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 Wins!"));
-                        }
-                        GameOver = true;
-                    }
-                    break;
-            }
+                }
+
+                if (player1Health < 0)
+                {
+                    player1Health = 0;
+                }
+                if (player2Health < 0)
+                {
+                    player2Health = 0;
+                }
+                GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
+                GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
+
+                GameObject.FindWithTag("Player1Discard").GetComponent<Text>().text = player1Discard.Count.ToString();
+                GameObject.FindWithTag("Player2Discard").GetComponent<Text>().text = player2Discard.Count.ToString();
+
+                GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
+                GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
+
+                DistributeCardsinHand();
+                break;
         }
-
-        if (player1Health < 0)
-        {
-            player1Health = 0;
-        }
-        if (player2Health < 0)
-        {
-            player2Health = 0;
-        }
-        GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
-        GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
-
-        GameObject.FindWithTag("Player1Discard").GetComponent<Text>().text = player1Discard.Count.ToString();
-        GameObject.FindWithTag("Player2Discard").GetComponent<Text>().text = player2Discard.Count.ToString();
-
-        GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
-        GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
-
-        DistributeCardsinHand();
     }
 
     void Player1Turn()

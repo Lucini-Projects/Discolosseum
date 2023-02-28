@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 416754141}
   - component: {fileID: 416754143}
   - component: {fileID: 416754142}
+  - component: {fileID: 416754144}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -451,15 +452,39 @@ MonoBehaviour:
   sendRate: 30
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 0}
+  transport: {fileID: 416754144}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 2
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 2565454053706742323, guid: 0819d293dd80f3645b863222bc57cf44, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
   timeInterpolationGui: 0
+--- !u!114 &416754144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416754140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: 7777
+  NoDelay: 1
+  SendTimeout: 5000
+  ReceiveTimeout: 30000
+  serverMaxMessageSize: 16384
+  serverMaxReceivesPerTick: 10000
+  serverSendQueueLimitPerConnection: 10000
+  serverReceiveQueueLimitPerConnection: 10000
+  clientMaxMessageSize: 16384
+  clientMaxReceivesPerTick: 1000
+  clientSendQueueLimit: 10000
+  clientReceiveQueueLimit: 10000
 --- !u!1 &1063395299
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,3 +1017,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769072417}
   m_CullTransparentMesh: 0
+--- !u!1001 &2034738276
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1033565946549469507, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
