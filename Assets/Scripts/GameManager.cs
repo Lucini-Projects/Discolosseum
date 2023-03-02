@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     bool stopOpponent;
 
     //Switches based on play mode; pvp or p vs ai
-    public static bool PVP = true;
+    public static bool PVP = false;
 
     GameObject UIOn;
     bool onOff = true;
@@ -347,12 +347,19 @@ public class GameManager : MonoBehaviour
                                 if (player1Health <= 0)
                                 {
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 Wins!"));
+                                    //StartCoroutine(BackToTitle());
                                 }
                                 if (player2Health <= 0)
                                 {
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 Wins!"));
+                                    //StartCoroutine(BackToTitle());
                                 }
                                 GameOver = true;
+                            }
+                            if (Input.GetKeyDown(KeyCode.Escape))
+                            {
+                                //Debug.Log("Called");
+                                Application.Quit();
                             }
                             break;
                     }
@@ -403,7 +410,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (elligibleToPlay.Count < 1)
+        if (elligibleToPlay.Count == 0)
         {
             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible. Ending Round."));
             gameState = GameState.EndRound;
@@ -446,11 +453,12 @@ public class GameManager : MonoBehaviour
                             elligible.Add(player1Hand[i]);
                         }
                     }
-                    if (elligible.Count == 0)
+                    if (elligible.Count < 1)
                     {
+                        Debug.Log("Here");
                         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 1 is forced to pass."));
                         player1Passed = true;
-                        //opponentMove = false;
+                        opponentMove = false;
                         GetComponent<AudioSource>().clip = SwitchTurn;
                         GetComponent<AudioSource>().Play();
                         if (currentEnergyPool > 0)
@@ -631,6 +639,12 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    IEnumerator BackToTitle()
+    {
+        yield return new WaitForSeconds(5.0f);
+        SceneManager.LoadScene("Title");
     }
 
     IEnumerator DamageCalculation(List<GameObject> P1Field, List<GameObject> P2Field)
@@ -924,7 +938,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
     {
-        if (Hand.Count < 6)
+        if (Hand.Count < 5)
         {
             GetComponent<AudioSource>().clip = Draw1Card;
             GetComponent<AudioSource>().Play();
