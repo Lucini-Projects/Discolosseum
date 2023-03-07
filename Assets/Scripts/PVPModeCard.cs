@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using Mirror;
 
-public class Card : MonoBehaviour
+public class PVPModeCard : NetworkBehaviour
 {
     public string cardName;
     public string className;
@@ -58,11 +59,11 @@ public class Card : MonoBehaviour
                 break;
             case "In Hand":
                 //Debug.Log("Called");
-                if (isPlayer1) 
+                if (this.isLocalPlayer)
                 {
                     GetComponent<SpriteRenderer>().sprite = cardFront;
                     privateKnowledge = false;
-                    if (energyCost > GameManager.currentEnergyPool || !GameManager.currentlyPlayer1Turn)
+                    if (GameManager.PVP && energyCost > GameManager.currentEnergyPool || !GameManager.PVP && (energyCost > GameManager.currentEnergyPool || !GameManager.currentlyPlayer1Turn))
                     {
                         canPlay = false;
                         transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
@@ -71,8 +72,8 @@ public class Card : MonoBehaviour
                     {
                         if (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
                         {
-                           canPlay = false;
-                           transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                            canPlay = false;
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                         }
                         else
                         {
@@ -120,7 +121,7 @@ public class Card : MonoBehaviour
 
         if (status == "In Hand")
         {
-            if (isPlayer1)
+            if (!GameManager.PVP && isPlayer1 || GameManager.PVP && GameManager.currentlyPlayer1Turn && isPlayer1 || GameManager.PVP && !GameManager.currentlyPlayer1Turn && !isPlayer1)
             {
                 if (!privateKnowledge)
                 {
@@ -143,13 +144,31 @@ public class Card : MonoBehaviour
                         }
                         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
                         deployed = true;
-                        GameManager.player1Field.Add(this.gameObject);
+                        if (GameManager.currentlyPlayer1Turn)
+                        {
+                            GameManager.player1Field.Add(this.gameObject);
+                        }
+                        else
+                        {
+                            GameManager.player2Field.Add(this.gameObject);
+                        }
                         status = "On Field";
                         //GameManager.player1Hand.Remove(this.gameObject);
 
                         //Debug.Log("Pressed");
                         GameManager.currentEnergyPool -= energyCost;
-                        GameManager.switchToPlayer2 = !GameManager.switchToPlayer2;
+
+                        if (GameManager.PVP)
+                        {
+                            GameManager.switchToPlayer2 = !GameManager.switchToPlayer2;
+                        }
+                        else
+                        {
+                            if (!GameManager.player2Passed)
+                            {
+                                GameManager.switchToPlayer2 = true;
+                            }
+                        }
                     }
                 }
             }

@@ -5,7 +5,7 @@ using Mirror;
 public class Test2P : NetworkBehaviour
 {
     [SerializeField]
-    private float speed;
+    private float speed =0.0f;
     void FixedUpdate()
     {
         if (this.isLocalPlayer)

@@ -14,6 +14,8 @@ public delegate void StateChange();
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> cardPool = new List<GameObject>();
+    public List<GameObject> cardPoolOnline = new List<GameObject>();
+
 
     public static List<GameObject> player1Deck = new List<GameObject>();
     public static List<GameObject> player1Hand = new List<GameObject>();
@@ -152,10 +154,21 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
                 gameState = GameState.GameStart;
 
-                foreach (GameObject go in cardPool)
+                if (!PVP)
                 {
-                    player1Deck.Add(go);
-                    player2Deck.Add(go);
+                    foreach (GameObject go in cardPool)
+                    {
+                        player1Deck.Add(go);
+                        player2Deck.Add(go);
+                    }
+                }
+                else
+                {
+                    foreach (GameObject go in cardPoolOnline)
+                    {
+                        player1Deck.Add(go);
+                        player2Deck.Add(go);
+                    }
                 }
                 break;
         }
