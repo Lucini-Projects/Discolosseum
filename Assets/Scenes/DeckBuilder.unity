@@ -334,8 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60350b2634263b478181adf63bf784f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meowSound: {fileID: 8300000, guid: 496d47bcab7240949bf81d4a1b1ee0aa, type: 3}
-  interval: 5
+  SoundEffects:
+  - {fileID: 8300000, guid: 73b63045fd5e75f4e97c1502d85ee4f7, type: 3}
+  - {fileID: 8300000, guid: bd6b1e8f9e4caa749b72a290f2070c51, type: 3}
+  - {fileID: 8300000, guid: 496d47bcab7240949bf81d4a1b1ee0aa, type: 3}
+  interval: 3
 --- !u!4 &1738040231
 Transform:
   m_ObjectHideFlags: 0

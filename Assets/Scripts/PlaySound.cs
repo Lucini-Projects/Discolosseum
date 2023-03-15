@@ -5,18 +5,17 @@ using UnityEngine;
 public class PlaySound : MonoBehaviour
 {
     //Sound Effect
-    public AudioClip meowSound;
+    public List<AudioClip> SoundEffects = new List<AudioClip>();
 
     //Time between meows
     public int interval = 0;
 
-    
     bool alreadyMeowing;
 
     void Update()
     {
         if(!alreadyMeowing)
-        {
+        { 
             StartCoroutine(Meow());
         }
     }
@@ -24,7 +23,8 @@ public class PlaySound : MonoBehaviour
     IEnumerator Meow()
     {
         alreadyMeowing = !alreadyMeowing;
-        GetComponent<AudioSource>().clip = meowSound;
+        int chosenSound = Random.Range(0, SoundEffects.Count);
+        GetComponent<AudioSource>().clip = SoundEffects[chosenSound];
         GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(interval);
         alreadyMeowing = !alreadyMeowing;
