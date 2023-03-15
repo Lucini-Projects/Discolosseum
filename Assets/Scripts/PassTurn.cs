@@ -8,5 +8,6 @@ public class PassTurn : MonoBehaviour
     public void Player1TurnPass()
     {
         GameManager.player1Passed = true;
+        GameManager.opponentMove = false;
     }
 }

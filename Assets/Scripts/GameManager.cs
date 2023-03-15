@@ -222,57 +222,57 @@ public class GameManager : MonoBehaviour
                             break;
                         case GameState.Player1Turn:
                             currentlyPlayer1Turn = true;
-                            if (!player1Passed)
-                            {
-                                //Temporarily set to false
-                                GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
-                            }
-                            else
+                            if (player1Passed)
                             {
                                 GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
-                            }
-
-                            if (player1Passed && player2Passed)
-                            {
-                                StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
-                                gameState = GameState.EndRound;
-                            }
-                            else
-                            {
-                                if (!player1Passed)
+                                if (player2Passed)
                                 {
-                                    Player1Turn();
+                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
+                                    gameState = GameState.EndRound;
                                 }
                                 else
                                 {
-                                    if (currentEnergyPool > 0)
-                                    {
-                                        gameState = GameState.Player2Turn;
-                                    }
-                                    else
-                                    {
-                                        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
-                                        gameState = GameState.EndRound;
-                                    }
+                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to player 2."));
+                                    gameState = GameState.Player2Turn;
                                 }
                             }
+                            else
+                            {
+                                GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = true;
+
+                                if (currentEnergyPool <= 0)
+                                {
+                                    StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
+                                    gameState = GameState.EndRound;
+                                }
+                                else
+                                {
+                                    Player1Turn();
+                                }
+                            }
+
                             break;
                         case GameState.Player2Turn:
                             currentlyPlayer1Turn = false;
                             if (!PVP)
                             {
+                                //Debug.Log("GameState has switched to opponent. Step 1.");
                                 if (!stopOpponent)
                                 {
+                                    //Debug.Log("GameState has switched to opponent. Step 2.");
                                     if (player1Passed && player2Passed)
                                     {
+                                        //Debug.Log("GameState has switched to opponent. Step 3.");
                                         stopOpponent = true;
                                         //StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                                         gameState = GameState.EndRound;
                                     }
                                     else
                                     {
+                                        //Debug.Log("GameState has switched to opponent. Step 4.");
                                         if (!opponentMove)
                                         {
+                                            //Debug.Log("GameState has switched to opponent. Step 5.");
                                             StartCoroutine(AITurn());
                                         }
                                     }
@@ -283,8 +283,7 @@ public class GameManager : MonoBehaviour
                                 currentlyPlayer1Turn = false;
                                 if (!player2Passed)
                                 {
-                                    //Temporarily changed this to false to revisit later
-                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = true;
                                 }
                                 else
                                 {
@@ -999,7 +998,7 @@ public class GameManager : MonoBehaviour
         int deployed2 = 0;
         if (player1Hand.Count != 0)
         {
-            int first = -25;
+            int first = -35;
             int bottomRow = 0;
             int topRow = 0;
             for (int i = 0; i < player1Hand.Count; i++)
@@ -1024,7 +1023,7 @@ public class GameManager : MonoBehaviour
         }
         if (player2Hand.Count != 0)
         {
-            int second = -25;
+            int second = -35;
             int bottomRow = 0;
             int topRow = 0;
             for (int i = 0; i < player2Hand.Count; i++)
