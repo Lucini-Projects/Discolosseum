@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public enum GameState
 {
@@ -194,12 +195,14 @@ public class GameManager : MonoBehaviour
             case "MainGameLoop":
                 if (Input.GetKeyDown(KeyCode.Keypad7))
                 {
+                    /*
                     Text[] textfields = UIOn.GetComponentsInChildren<Text>();
                     onOff = !onOff;
                     foreach (Text text in textfields)
                     {
                         text.enabled = onOff;
                     }
+                    */
                 }
 
                 if (GameObject.FindGameObjectsWithTag("Narration").Length > 0 && !GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
@@ -359,12 +362,12 @@ public class GameManager : MonoBehaviour
                                 if (player1Health <= 0)
                                 {
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 Wins!"));
-                                    //StartCoroutine(BackToTitle());
+                                    StartCoroutine(BackToTitle());
                                 }
                                 if (player2Health <= 0)
                                 {
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 Wins!"));
-                                    //StartCoroutine(BackToTitle());
+                                    StartCoroutine(BackToTitle());
                                 }
                                 GameOver = true;
                             }
@@ -385,14 +388,14 @@ public class GameManager : MonoBehaviour
                 {
                     player2Health = 0;
                 }
-                GameObject.FindWithTag("Player1Health").GetComponent<Text>().text = "Health: " + player1Health.ToString();
-                GameObject.FindWithTag("Player2Health").GetComponent<Text>().text = "Health: " + player2Health.ToString();
+                GameObject.FindWithTag("Player1Health").GetComponent<TMP_Text>().text = player1Health.ToString();
+                GameObject.FindWithTag("Player2Health").GetComponent<TMP_Text>().text = player2Health.ToString();
 
                 GameObject.FindWithTag("Player1Discard").GetComponent<Text>().text = player1Discard.Count.ToString();
                 GameObject.FindWithTag("Player2Discard").GetComponent<Text>().text = player2Discard.Count.ToString();
 
-                GameObject.FindWithTag("RoundNumber").GetComponent<Text>().text = "Round: " + roundNumber.ToString();
-                GameObject.FindWithTag("EnergyPool").GetComponent<Text>().text = "Energy: " + currentEnergyPool.ToString();
+                GameObject.FindWithTag("RoundNumber").GetComponent<TMP_Text>().text = "Round: " + roundNumber.ToString();
+                GameObject.FindWithTag("EnergyPool").GetComponent<TMP_Text>().text = currentEnergyPool.ToString();
 
                 DistributeCardsinHand();
                 break;
@@ -655,8 +658,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator BackToTitle()
     {
+        yield return new WaitForSeconds(2.0f);
+        StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Thank you for playing this game! Now exiting."));
         yield return new WaitForSeconds(5.0f);
-        SceneManager.LoadScene("Title");
+        Application.Quit();
     }
 
     IEnumerator DamageCalculation(List<GameObject> P1Field, List<GameObject> P2Field)
@@ -687,6 +692,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < P2Field.Count; i++)
         {
             P2Field[i].transform.Find("Sword Glow").gameObject.SetActive(true);
+            P2Field[i].transform.Find("Sword Glow").gameObject.transform.localPosition = new Vector3(0, -8.5f, 0);
             p2attack += P2Field[i].GetComponent<Card>().attack;
             GetComponent<AudioSource>().clip = AddStat;
             GetComponent<AudioSource>().Play();
@@ -707,6 +713,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < P2Field.Count; i++)
         {
             P2Field[i].transform.Find("Shield Glow").gameObject.SetActive(true);
+            P2Field[i].transform.Find("Shield Glow").gameObject.transform.localPosition = new Vector3(0, -8.5f, 0);
             p2defense += P2Field[i].GetComponent<Card>().defense;
             GetComponent<AudioSource>().clip = AddStat;
             GetComponent<AudioSource>().Play();
@@ -998,7 +1005,7 @@ public class GameManager : MonoBehaviour
         int deployed2 = 0;
         if (player1Hand.Count != 0)
         {
-            int first = -35;
+            int first = -25;
             int bottomRow = 0;
             int topRow = 0;
             for (int i = 0; i < player1Hand.Count; i++)
@@ -1023,7 +1030,7 @@ public class GameManager : MonoBehaviour
         }
         if (player2Hand.Count != 0)
         {
-            int second = -35;
+            int second = -25;
             int bottomRow = 0;
             int topRow = 0;
             for (int i = 0; i < player2Hand.Count; i++)

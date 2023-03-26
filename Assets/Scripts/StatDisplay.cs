@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class StatDisplay : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class StatDisplay : MonoBehaviour
                 {
                     attackTotal += GameManager.player1Field[i].GetComponent<Card>().attack;
                 }
-                GetComponent<Text>().text = "Total Attack: " + attackTotal.ToString();
+                GetComponent<TMP_Text>().text = attackTotal.ToString();
             }
             else
             {
@@ -34,7 +35,7 @@ public class StatDisplay : MonoBehaviour
                 {
                     defenseTotal += GameManager.player1Field[i].GetComponent<Card>().defense;
                 }
-                GetComponent<Text>().text = "Total Defense: " + defenseTotal.ToString();
+                GetComponent<TMP_Text>().text = defenseTotal.ToString();
             }
         }
         else
@@ -46,7 +47,7 @@ public class StatDisplay : MonoBehaviour
                 {
                     attackTotal += GameManager.player2Field[i].GetComponent<Card>().attack;
                 }
-                GetComponent<Text>().text = "Total Attack: " + attackTotal.ToString();
+                GetComponent<TMP_Text>().text = attackTotal.ToString();
             }
             else
             {
@@ -55,7 +56,7 @@ public class StatDisplay : MonoBehaviour
                 {
                     defenseTotal += GameManager.player2Field[i].GetComponent<Card>().defense;
                 }
-                GetComponent<Text>().text = "Total Defense: " + defenseTotal.ToString();
+                GetComponent<TMP_Text>().text = defenseTotal.ToString();
             }
         }
     }
