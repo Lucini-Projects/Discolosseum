@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
     public static bool PVP = false;
 
     GameObject UIOn;
-    bool onOff = true;
 
     //Used to trap the startup.
     bool beginGame = false;
@@ -135,9 +134,23 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Fix this glitch.");
                 break;
             case "Title":
-                gameState = GameState.MainMenu;
+                gameState = GameState.GameStart;
                 break;
             case "MainGameLoop":
+                player1Deck = new List<GameObject>();
+                player1Hand = new List<GameObject>();
+
+                player2Deck = new List<GameObject>();
+                player2Hand = new List<GameObject>();
+
+                player1Field = new List<GameObject>();
+                player2Field = new List<GameObject>();
+
+                player1Discard = new List<GameObject>();
+                player2Discard = new List<GameObject>();
+
+                player1Revived = new List<GameObject>();
+                player2Revived = new List<GameObject>();
                 gameState = GameState.GameStart;
                 // Check if the name of the current Active Scene is your first Scene.
                 StatIcons = GameObject.FindWithTag("StatIcons");
@@ -149,7 +162,7 @@ public class GameManager : MonoBehaviour
                 Text[] textfields = UIOn.GetComponentsInChildren<Text>();
                 foreach (Text text in textfields)
                 {
-                    text.enabled = false;
+                    //text.enabled = false;
                 }
 
                 StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Game Begin!"));
@@ -256,6 +269,7 @@ public class GameManager : MonoBehaviour
 
                             break;
                         case GameState.Player2Turn:
+                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                             currentlyPlayer1Turn = false;
                             if (!PVP)
                             {
@@ -320,6 +334,7 @@ public class GameManager : MonoBehaviour
                             }
                             break;
                         case GameState.EndRound:
+                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                             stopOpponent = false;
                             if (!stawp)
                             {
@@ -327,6 +342,7 @@ public class GameManager : MonoBehaviour
                             }
                             break;
                         case GameState.NextRound:
+                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                             GameObject.FindWithTag("DamageAnimation").GetComponent<Animator>().SetBool("isDamaged", false);
                             discard = false;
                             DrawingProcedure(lastTookDamage);
@@ -355,6 +371,7 @@ public class GameManager : MonoBehaviour
                             }
                             break;
                         case GameState.GameEnd:
+                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                             if (!GameOver)
                             {
                                 GetComponent<AudioSource>().clip = Win;
@@ -391,8 +408,8 @@ public class GameManager : MonoBehaviour
                 GameObject.FindWithTag("Player1Health").GetComponent<TMP_Text>().text = player1Health.ToString();
                 GameObject.FindWithTag("Player2Health").GetComponent<TMP_Text>().text = player2Health.ToString();
 
-                GameObject.FindWithTag("Player1Discard").GetComponent<Text>().text = player1Discard.Count.ToString();
-                GameObject.FindWithTag("Player2Discard").GetComponent<Text>().text = player2Discard.Count.ToString();
+                GameObject.FindWithTag("Player1Discard").GetComponent<TMP_Text>().text = player1Discard.Count.ToString();
+                GameObject.FindWithTag("Player2Discard").GetComponent<TMP_Text>().text = player2Discard.Count.ToString();
 
                 GameObject.FindWithTag("RoundNumber").GetComponent<TMP_Text>().text = "Round: " + roundNumber.ToString();
                 GameObject.FindWithTag("EnergyPool").GetComponent<TMP_Text>().text = currentEnergyPool.ToString();

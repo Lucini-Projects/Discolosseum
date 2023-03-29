@@ -141,7 +141,9 @@ public class Card : MonoBehaviour
                             GetComponent<AudioSource>().clip = PlayCard;
                             GetComponent<AudioSource>().Play();
                         }
+                        GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player has deployed " + cardName + ", which has " + attack.ToString() + " attack and " + defense.ToString() + " defense."));
+
                         deployed = true;
                         GameManager.player1Field.Add(this.gameObject);
                         status = "On Field";
