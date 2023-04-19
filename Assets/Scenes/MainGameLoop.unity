@@ -5766,6 +5766,14 @@ PrefabInstance:
       propertyPath: cardPoolOnline.Array.data[19]
       value: 
       objectReference: {fileID: 181250599223394074, guid: cf2b15a3520f0f9499fff55e758de424, type: 3}
+    - target: {fileID: 1033565946549469516, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: cardPool.Array.data[2]
+      value: 
+      objectReference: {fileID: 181250599223394074, guid: 86db560cb6f63ed429cacdff2f2f9afb, type: 3}
+    - target: {fileID: 1033565946549469516, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
+      propertyPath: cardPool.Array.data[3]
+      value: 
+      objectReference: {fileID: 181250599223394074, guid: 86db560cb6f63ed429cacdff2f2f9afb, type: 3}
     - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
