@@ -11,5 +11,13 @@ public class BackgroundPick : MonoBehaviour
     {
         int picker = Random.Range(0, backGround.Length);
         GetComponent<SpriteRenderer>().sprite = backGround[picker];
+        if(picker==1)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            GameObject.FindWithTag("AnimatedBG").SetActive(false);
+        }
     }
 }

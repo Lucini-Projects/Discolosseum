@@ -48,6 +48,14 @@ public class Card : MonoBehaviour
 
     void Update()
     {
+        if (isPlayer1)
+        {
+            discardPile = GameObject.FindWithTag("Player1DiscardPile");
+        }
+        else
+        {
+            discardPile = GameObject.FindWithTag("Player2DiscardPile");
+        }
         switch (status)
         {
             default:
@@ -62,7 +70,7 @@ public class Card : MonoBehaviour
                 {
                     GetComponent<SpriteRenderer>().sprite = cardFront;
                     privateKnowledge = false;
-                    if (energyCost > GameManager.currentEnergyPool || !GameManager.currentlyPlayer1Turn)
+                    if (energyCost > GameManager.currentEnergyPool || !GameManager.currentlyPlayer1Turn || GameManager.player1Passed)
                     {
                         canPlay = false;
                         transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
@@ -219,6 +227,15 @@ public class Card : MonoBehaviour
             GameManager.player2Hand.Remove(this.gameObject);
         }
         transform.position = discardPile.transform.position;
+        if (isPlayer1)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - GameManager.player1Discard.Count);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - GameManager.player2Discard.Count);
+        }
+        
         //Destroy(this.gameObject);
     }
 
