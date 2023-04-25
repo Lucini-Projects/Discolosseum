@@ -9,6 +9,8 @@ public class SceneLoader : MonoBehaviour
     private List<Scene> scenes;
     public int inspectorsceneindex = 0;
 
+    public GameObject LoadingScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,9 +69,11 @@ public class SceneLoader : MonoBehaviour
         //Debug.Log("Button Works");
     }
 
-    public static void LoadVAI()
+    public void LoadVAI()
     {
+        LoadingScreen.SetActive(true);
         GameManager.PVP = false;
+        //StartCoroutine(LoadSceneAsync("MainGameLoop"));
         SceneManager.LoadScene("MainGameLoop");
     }
 
@@ -82,5 +86,16 @@ public class SceneLoader : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    IEnumerator LoadSceneAsync(string scene)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
+        LoadingScreen.SetActive(true);
+
+        while(!operation.isDone)
+        {
+            yield return null;
+        }
     }
 }

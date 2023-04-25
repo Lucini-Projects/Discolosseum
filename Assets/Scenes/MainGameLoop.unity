@@ -501,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3819454877738679519, guid: 8af1c2f7ce8ccab4cacefdf7cd81639c, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3819454877738679519, guid: 8af1c2f7ce8ccab4cacefdf7cd81639c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1075,9 +1075,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 30, y: 30, z: 30, w: 30}
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1829,7 +1829,7 @@ GameObject:
   - component: {fileID: 657171946}
   - component: {fileID: 657171945}
   m_Layer: 0
-  m_Name: Attack Icon (1)
+  m_Name: AttackIconOpponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1937,7 +1937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4751446517290469497, guid: 5be545652ed05a749838c97a1724ef00, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4751446517290469497, guid: 5be545652ed05a749838c97a1724ef00, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2394,7 +2394,7 @@ GameObject:
   - component: {fileID: 810713103}
   - component: {fileID: 810713102}
   m_Layer: 0
-  m_Name: Defense Icon (1)
+  m_Name: DefenseIconOpponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2593,7 +2593,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51f0b4937b0b0004e8edd0183c408e4d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ee258c994855e44488a0ff79701443c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2727,7 +2727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4751446517290469497, guid: 5be545652ed05a749838c97a1724ef00, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4751446517290469497, guid: 5be545652ed05a749838c97a1724ef00, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4368,7 +4368,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -626, y: -410}
+  m_AnchoredPosition: {x: -626, y: -406.1}
   m_SizeDelta: {x: 360, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672188955
@@ -4441,14 +4441,14 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 50, y: 50, z: 50, w: 50}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: d600c93d56b9ef043bc5f2e0fa094096, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -4513,7 +4513,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -626, y: -480}
+  m_AnchoredPosition: {x: -626, y: -490.7}
   m_SizeDelta: {x: 360, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673007104
@@ -4529,6 +4529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inspectorsceneindex: 0
+  LoadingScreen: {fileID: 0}
 --- !u!114 &1673007105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4599,14 +4600,14 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 80, y: 80, z: 80, w: 80}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: d600c93d56b9ef043bc5f2e0fa094096, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -5766,14 +5767,6 @@ PrefabInstance:
       propertyPath: cardPoolOnline.Array.data[19]
       value: 
       objectReference: {fileID: 181250599223394074, guid: cf2b15a3520f0f9499fff55e758de424, type: 3}
-    - target: {fileID: 1033565946549469516, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
-      propertyPath: cardPool.Array.data[2]
-      value: 
-      objectReference: {fileID: 181250599223394074, guid: 86db560cb6f63ed429cacdff2f2f9afb, type: 3}
-    - target: {fileID: 1033565946549469516, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
-      propertyPath: cardPool.Array.data[3]
-      value: 
-      objectReference: {fileID: 181250599223394074, guid: 86db560cb6f63ed429cacdff2f2f9afb, type: 3}
     - target: {fileID: 1033565946549469517, guid: 951bb256a8cbd5447ac124724f9dd9a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

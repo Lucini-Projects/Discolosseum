@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 1373394487
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ac8a46a116482c47856692cd9738c2b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2e81f74362acc4a4ea348f64462384f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   attack: 2
   defense: 2
   cardBack: {fileID: 21300000, guid: 9fd58290441c10f46b02864b354915ea, type: 3}
-  cardFront: {fileID: 21300000, guid: 0ac8a46a116482c47856692cd9738c2b, type: 3}
+  cardFront: {fileID: 21300000, guid: 2e81f74362acc4a4ea348f64462384f6, type: 3}
   isPlayer1: 0
   canPlay: 0
   deployed: 0

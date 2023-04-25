@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 1373394487
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2ca51ac151a1c9344a1df42235135eb5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 492a16e566543744280fcfc98894256b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,11 +104,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Duolphin
   className: Common
-  energyCost: 2
-  attack: 1
-  defense: 1
+  energyCost: 1
+  attack: 0
+  defense: 0
   cardBack: {fileID: 21300000, guid: 9fd58290441c10f46b02864b354915ea, type: 3}
-  cardFront: {fileID: 21300000, guid: 2ca51ac151a1c9344a1df42235135eb5, type: 3}
+  cardFront: {fileID: 21300000, guid: 492a16e566543744280fcfc98894256b, type: 3}
   isPlayer1: 0
   canPlay: 0
   deployed: 0
@@ -330,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2555729151292920405}
   - component: {fileID: 893608951583608265}
-  - component: {fileID: 6961740660970167669}
+  - component: {fileID: 6488065268291964630}
   m_Layer: 0
   m_Name: AttackStat
   m_TagString: Untagged
@@ -392,7 +392,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 77ce253ca327a3a4b8f9acf8332bd2cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4dd6059b5b743d4ca5c754740aded1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -403,7 +403,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6961740660970167669
+--- !u!114 &6488065268291964630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -412,12 +412,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7648622890809367835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b5f45cf83cd49849bbc3f034c2cff03, type: 3}
+  m_Script: {fileID: 11500000, guid: aaa251b413497e748b3c28ceb023ae6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noDefense: 1
+  ZeroSpright: {fileID: 21300000, guid: d4dd6059b5b743d4ca5c754740aded1e, type: 3}
   TwoSpright: {fileID: 21300000, guid: 64f72fa6f445d4646aa1a6a701d55c93, type: 3}
-  FourSpright: {fileID: 21300000, guid: ea69779c90e0a974e9b9b732c3452ac7, type: 3}
 --- !u!1 &7680958935899173414
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +634,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 77ce253ca327a3a4b8f9acf8332bd2cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4dd6059b5b743d4ca5c754740aded1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -15,6 +15,23 @@ public class Abilities : MonoBehaviour
         {
             default:
                 break;
+            case "Duolphin":
+                if (GetComponent<Card>().isPlayer1 && !GameManager.player1Starts || !GetComponent<Card>().isPlayer1 && GameManager.player1Starts)
+                {
+                    GetComponent<Card>().attack = 2;
+                }
+                else
+                {
+                    GetComponent<Card>().attack = 0;
+                }
+                break;
+
+            case "Monkeyfishfrog":
+                if (!GetComponent<Card>().abilityUsed)
+                {
+                    MFF();
+                }
+                break;
             case "Raivolope":
                 if (NoDefense())
                 {
@@ -110,6 +127,42 @@ public class Abilities : MonoBehaviour
                 }
             }
         }
+        GetComponent<Card>().abilityUsed = true;
+    }
+
+    void MFF()
+    {
+        int rAttack = Random.Range(0, 101);
+        if (rAttack < 40)
+        {
+            GetComponent<Card>().attack = 0;
+        }
+        else if (rAttack < 50)
+        {
+            GetComponent<Card>().attack = 1;
+        }
+        else if (rAttack < 60)
+        {
+            GetComponent<Card>().attack = 2;
+        }
+        else if (rAttack < 70)
+        {
+            GetComponent<Card>().attack = 3;
+        }
+        else if (rAttack < 85)
+        {
+            GetComponent<Card>().attack = 4;
+        }
+        else if (rAttack < 95)
+        {
+            GetComponent<Card>().attack = 5;
+        }
+        else
+        {
+            GetComponent<Card>().attack = 6;
+        }
+        
+        Debug.Log("Monkeyfishfrog has " + GetComponent<Card>().attack + " attack.");
         GetComponent<Card>().abilityUsed = true;
     }
 

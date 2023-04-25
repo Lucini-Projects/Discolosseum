@@ -243,11 +243,13 @@ public class GameManager : MonoBehaviour
                                 GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                                 if (player2Passed)
                                 {
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                                     gameState = GameState.EndRound;
                                 }
                                 else
                                 {
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to player 2."));
                                     gameState = GameState.Player2Turn;
                                 }
@@ -258,6 +260,7 @@ public class GameManager : MonoBehaviour
 
                                 if (currentEnergyPool <= 0)
                                 {
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
                                     gameState = GameState.EndRound;
                                 }
@@ -309,6 +312,7 @@ public class GameManager : MonoBehaviour
 
                                 if (player1Passed && player2Passed)
                                 {
+                                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                                     gameState = GameState.EndRound;
                                 }
@@ -326,6 +330,7 @@ public class GameManager : MonoBehaviour
                                         }
                                         else
                                         {
+                                            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                                             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is Empty. Ending Round."));
                                             gameState = GameState.EndRound;
                                         }
@@ -444,6 +449,7 @@ public class GameManager : MonoBehaviour
 
         if (elligibleToPlay.Count == 0)
         {
+            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible. Ending Round."));
             gameState = GameState.EndRound;
         }
@@ -453,6 +459,7 @@ public class GameManager : MonoBehaviour
             {
                 if (player2Passed)
                 {
+                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                     GetComponent<AudioSource>().clip = SwitchRound;
                     GetComponent<AudioSource>().Play();
@@ -460,6 +467,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 1 has passed. Switching to Player 2."));
                     GetComponent<AudioSource>().clip = SwitchTurn;
                     GetComponent<AudioSource>().Play();
@@ -488,6 +496,7 @@ public class GameManager : MonoBehaviour
                     if (elligible.Count < 1)
                     {
                         Debug.Log("Here");
+                        GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                         StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible, player 1 is forced to pass."));
                         player1Passed = true;
                         opponentMove = false;
@@ -533,6 +542,7 @@ public class GameManager : MonoBehaviour
 
         if (elligibleToPlay.Count < 1)
         {
+            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("No more moves are possible. Ending Round."));
             gameState = GameState.EndRound;
         }
@@ -542,6 +552,7 @@ public class GameManager : MonoBehaviour
             {
                 if (player2Passed)
                 {
+                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending Round."));
                     GetComponent<AudioSource>().clip = SwitchRound;
                     GetComponent<AudioSource>().Play();
@@ -549,6 +560,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 has passed. Switching to Player 1."));
                     GetComponent<AudioSource>().clip = SwitchTurn;
                     GetComponent<AudioSource>().Play();
@@ -912,6 +924,7 @@ public class GameManager : MonoBehaviour
 
         if (currentEnergyPool == 0)
         {
+            GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
             StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("The Energy Pool is empty. Ending round."));
             gameState = GameState.EndRound;
         }
@@ -921,11 +934,13 @@ public class GameManager : MonoBehaviour
             {
                 if (player1Passed)
                 {
+                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Both players have passed. Ending round."));
                     gameState = GameState.EndRound;
                 }
                 else
                 {
+                    GameObject.FindWithTag("Pass").GetComponent<Button>().interactable = false;
                     StartCoroutine(GameObject.FindWithTag("Narration").GetComponent<Narrative>().NewText("Player 2 has passed. Switching to player 1."));
                     GetComponent<AudioSource>().clip = SwitchTurn;
                     GetComponent<AudioSource>().Play();
