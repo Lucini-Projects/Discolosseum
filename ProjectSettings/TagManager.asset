@@ -33,6 +33,17 @@ TagManager:
   - P2IteratingDefense
   - StatIcons
   - AnimatedBG
+  - Discarded
+  - Drawn Card (Player)
+  - Drawn Card (Enemy)
+  - Win (Player)
+  - Win (Enemy)
+  - Lose (Player)
+  - Lose (Enemy)
+  - In Play Card (Player)
+  - In Play Card (Enemy)
+  - Summoned Card (Player)
+  - Summoned Card (Enemy)
   layers:
   - Default
   - TransparentFX

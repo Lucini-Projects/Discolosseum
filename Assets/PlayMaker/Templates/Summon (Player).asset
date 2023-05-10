@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1219815696, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: Card Summon (Player)
+  m_Name: Summon (Player)
   m_EditorClassIdentifier: 
   category: 
   fsm:
     dataVersion: 2
     usedInTemplate: {fileID: 11400000}
-    name: Place/Summon
+    name: FSM
     startState: Locate Spawned Card & Animate
     states:
     - name: Locate Spawned Card & Animate
@@ -25,7 +25,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 64
-        y: 124
+        y: 120.34375
         width: 222
         height: 32
       isBreakpoint: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: Summoned Card
+          value: Summoned Card (Player)
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -123,7 +123,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 711
-        y: 127
+        y: 123.34375
         width: 100
         height: 16
       isBreakpoint: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0000010101
-        actionIsOpen: 0000000101
+        actionIsOpen: 0000000000
         actionStartIndex: 00000000030000000a0000001100000019000000
         actionHashCodes: 786b39025552ad055552ad05f6e5be03c064cb04
         unityObjectParams: []
@@ -466,7 +466,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 862.2344
-        y: 127.55469
+        y: 123.89844
         width: 100
         height: 32
       isBreakpoint: 0
@@ -777,7 +777,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 1006.3594
-        y: 125.40625
+        y: 121.75
         width: 100
         height: 32
       isBreakpoint: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 00000101
-        actionIsOpen: 01000001
+        actionIsOpen: 01000000
         actionStartIndex: 00000000030000000a00000012000000
         actionHashCodes: 786b39025552ad05f6e5be03c064cb04
         unityObjectParams: []
@@ -1088,7 +1088,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 1388.2812
-        y: 109.02344
+        y: 105.36719
         width: 100
         height: 32
       isBreakpoint: 0
@@ -1342,7 +1342,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 1521.2812
-        y: 108
+        y: 104.34375
         width: 100
         height: 32
       isBreakpoint: 0
@@ -1745,7 +1745,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 1671.7969
-        y: 105.9375
+        y: 102.28125
         width: 100
         height: 32
       isBreakpoint: 0
@@ -2212,7 +2212,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 1807.5391
-        y: 99.65625
+        y: 96
         width: 100
         height: 16
       isBreakpoint: 0
@@ -2514,7 +2514,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 864
-        y: 266.0078
+        y: 262.35156
         width: 100
         height: 32
       isBreakpoint: 0
@@ -2644,7 +2644,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: In Play Card
+          value: In Play Card (Player)
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -2790,7 +2790,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 130
-        y: 194
+        y: 190.34375
         width: 100
         height: 32
       isBreakpoint: 0
@@ -2863,7 +2863,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 542
-        y: 115
+        y: 111.34375
         width: 113
         height: 32
       isBreakpoint: 0
@@ -2915,7 +2915,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: Summoned Card
+          value: Summoned Card (Player)
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -2947,7 +2947,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 1147
-        y: 125
+        y: 121.34375
         width: 100
         height: 16
       isBreakpoint: 0
@@ -3131,7 +3131,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - 
-        - 
+        - Reset
         - Set an ID for the tween, which can then be used as a filter with DOTween's
           Control Methods
         - Setting loops to -1 will make the tween loop infinitely.
@@ -3186,6 +3186,27 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
@@ -3193,9 +3214,6 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 1
     - name: Reset
-      isSystemEvent: 0
-      isGlobal: 1
-    - name: Draw Card
       isSystemEvent: 0
       isGlobal: 1
     - name: Summon Card
