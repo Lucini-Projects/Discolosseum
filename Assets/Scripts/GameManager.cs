@@ -419,7 +419,7 @@ public class GameManager : MonoBehaviour
                 GameObject.FindWithTag("RoundNumber").GetComponent<TMP_Text>().text = "Round: " + roundNumber.ToString();
                 GameObject.FindWithTag("EnergyPool").GetComponent<TMP_Text>().text = currentEnergyPool.ToString();
 
-                DistributeCardsinHand();
+                //DistributeCardsinHand();
                 break;
         }
     }
@@ -617,69 +617,69 @@ public class GameManager : MonoBehaviour
             case "Player1":
                 if (player1Hand.Count == 0)
                 {
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
                 }
                 else
                 {
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
                 }
                 if (player2Hand.Count == 0)
                 {
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
                 }
                 else
                 {
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
                 }
                 break;
             case "Player2":
                 if (player1Hand.Count == 0)
                 {
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
                 }
                 else
                 {
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
                 }
                 if (player2Hand.Count == 0)
                 {
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
                 }
                 else
                 {
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
                 }
                 break;
             case "Draw":
                 if (player1Hand.Count == 0)
                 {
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
                 }
                 else
                 {
-                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard));
+                    StartCoroutine(Draw1(player1Deck, player1Hand, player1Discard, true));
                 }
                 if (player2Hand.Count == 0)
                 {
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
                 }
                 else
                 {
-                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard));
+                    StartCoroutine(Draw1(player2Deck, player2Hand, player2Discard, false));
                 }
                 break;
         }
@@ -798,6 +798,16 @@ public class GameManager : MonoBehaviour
 
         if (modifiedP1attack > modifiedP2attack)
         {
+            for (int i = 0; i < P1Field.Count; i++)
+            {
+                StartCoroutine(P1Field[i].GetComponent<Card>().Win());
+            }
+
+            for (int i = 0; i < P2Field.Count; i++)
+            {
+                StartCoroutine(P2Field[i].GetComponent<Card>().Lose());
+            }
+
             damage = modifiedP1attack - modifiedP2attack;
             player2Health -= damage;
             lastTookDamage = "Player2";
@@ -811,6 +821,16 @@ public class GameManager : MonoBehaviour
         {
             if (modifiedP1attack < modifiedP2attack)
             {
+                for (int i = 0; i < P1Field.Count; i++)
+                {
+                    StartCoroutine(P1Field[i].GetComponent<Card>().Lose());
+                }
+
+                for (int i = 0; i < P2Field.Count; i++)
+                {
+                    StartCoroutine(P2Field[i].GetComponent<Card>().Win());
+                }
+
                 damage = modifiedP2attack - modifiedP1attack;
                 player1Health -= damage;
                 lastTookDamage = "Player1";
@@ -826,6 +846,8 @@ public class GameManager : MonoBehaviour
                 lastTookDamage = "Draw";
             }
         }
+
+        yield return new WaitForSeconds(3.0f);
 
         player1Field.Clear();
         player2Field.Clear();
@@ -972,22 +994,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator Draw4(List<GameObject> Deck, List<GameObject> Hand)
+    IEnumerator Draw4(List<GameObject> Deck, List<GameObject> Hand, bool P1)
     {
         GetComponent<AudioSource>().clip = Draw4Cards;
         GetComponent<AudioSource>().Play();
         for (int i = 0; i < 4; i++)
         {
-            GameObject newCard = Instantiate(Deck[i], new Vector2(-20, -40), Quaternion.identity);
-            Hand.Add(newCard);
-            Deck.Remove(Deck[i]);
-
-            yield return new WaitForSeconds(.25f);
-            newCard.GetComponent<Card>().AddToHand();
+            if (P1)
+            {
+                GameObject newCard = Instantiate(Deck[0], GameObject.FindWithTag("Player1Deck").transform.position, Quaternion.identity);
+                //StartCoroutine(newCard.GetComponent<Card>().Draw());
+                Hand.Add(newCard);
+                Deck.Remove(Deck[0]);
+                yield return new WaitForSeconds(.5f);
+                newCard.GetComponent<Card>().AddToHand();
+            }
+            else
+            {
+                GameObject newCard = Instantiate(Deck[0], GameObject.FindWithTag("Player2Deck").transform.position, Quaternion.identity);
+                //StartCoroutine(newCard.GetComponent<Card>().Draw());
+                Hand.Add(newCard);
+                Deck.Remove(Deck[0]);
+                yield return new WaitForSeconds(.5f);
+                newCard.GetComponent<Card>().AddToHand();
+            }
         }
+        DistributeCardsinHand();
     }
 
-    IEnumerator Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard)
+    IEnumerator Draw1(List<GameObject> Deck, List<GameObject> Hand, List<GameObject> Discard, bool P1)
     {
         if (Hand.Count < 5)
         {
@@ -1004,12 +1039,27 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("No more cards in deck, shuffling discard pile into deck.");
                 Shuffle(Deck);
             }
-            GameObject newCard = Instantiate(Deck[0], new Vector2(-100, -100), Quaternion.identity);
-            Hand.Add(newCard);
-            Deck.Remove(Deck[0]);
-            yield return new WaitForSeconds(.25f);
-            newCard.GetComponent<Card>().AddToHand();
+
+            if (P1)
+            {
+                GameObject newCard = Instantiate(Deck[0], GameObject.FindWithTag("Player1Deck").transform.position, Quaternion.identity);
+                StartCoroutine(newCard.GetComponent<Card>().Draw());
+                Hand.Add(newCard);
+                Deck.Remove(Deck[0]);
+                yield return new WaitForSeconds(1.0f);
+                newCard.GetComponent<Card>().AddToHand();
+            }
+            else
+            {
+                GameObject newCard = Instantiate(Deck[0], GameObject.FindWithTag("Player2Deck").transform.position, Quaternion.identity);
+                StartCoroutine(newCard.GetComponent<Card>().Draw());
+                Hand.Add(newCard);
+                Deck.Remove(Deck[0]);
+                yield return new WaitForSeconds(1.0f);
+                newCard.GetComponent<Card>().AddToHand();
+            }
         }
+        DistributeCardsinHand();
     }
 
     IEnumerator BeginGame()
@@ -1017,8 +1067,8 @@ public class GameManager : MonoBehaviour
         Shuffle(player1Deck);
         Shuffle(player2Deck);
 
-        StartCoroutine(Draw4(player1Deck, player1Hand));
-        StartCoroutine(Draw4(player2Deck, player2Hand));
+        StartCoroutine(Draw4(player1Deck, player1Hand, true));
+        StartCoroutine(Draw4(player2Deck, player2Hand, false));
 
         player1Health = 20;
         player2Health = 20;

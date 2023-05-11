@@ -66,7 +66,7 @@ public class Card : MonoBehaviour
                 break;
             case "In Hand":
                 //Debug.Log("Called");
-                if (isPlayer1) 
+                if (isPlayer1)
                 {
                     GetComponent<SpriteRenderer>().sprite = cardFront;
                     privateKnowledge = false;
@@ -79,8 +79,8 @@ public class Card : MonoBehaviour
                     {
                         if (GameObject.FindWithTag("Narration").GetComponent<Narrative>().isTyping)
                         {
-                           canPlay = false;
-                           transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
+                            canPlay = false;
+                            transform.GetChild(0).GetComponent<Animator>().SetBool("IsUsable", false);
                         }
                         else
                         {
@@ -134,6 +134,7 @@ public class Card : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0) && canPlay && !deployed && isPlayer1)
                     {
+                        transform.gameObject.tag = "Summoned Card (Player)";
                         GameManager.pickMe = true;
                         if (className == "Sovereign")
                         {
@@ -187,6 +188,7 @@ public class Card : MonoBehaviour
     //For the enemy AI
     public void Deploy()
     {
+        transform.gameObject.tag = "Summoned Card (Enemy)";
         if (className == "Sovereign")
         {
             transform.Find("Shockwave2").GetComponent<Animator>().SetBool("V2 Card Played", true);
@@ -235,7 +237,7 @@ public class Card : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - GameManager.player2Discard.Count);
         }
-        
+
         //Destroy(this.gameObject);
     }
 
@@ -250,5 +252,48 @@ public class Card : MonoBehaviour
         Debug.Log(cardName + " should be destroyed now.");
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
+    }
+
+    public IEnumerator Draw()
+    {
+        if (isPlayer1)
+        {
+            transform.gameObject.tag = "Drawn Card (Player)";
+        }
+        else
+        {
+            transform.gameObject.tag = "Drawn Card (Enemy)";
+        }
+        yield return new WaitForSeconds(.5f);
+        transform.gameObject.tag = "Card";
+    }
+
+    public IEnumerator Win()
+    {
+        Debug.Log("Called");
+        if (isPlayer1)
+        {
+            transform.gameObject.tag = "Win (Player)";
+        }
+        else
+        {
+            transform.gameObject.tag = "Win (Enemy)";
+        }
+        yield return new WaitForSeconds(.5f);
+        transform.gameObject.tag = "Card";
+    }
+
+    public IEnumerator Lose()
+    {
+        if (isPlayer1)
+        {
+            transform.gameObject.tag = "Lose (Player)";
+        }
+        else
+        {
+            transform.gameObject.tag = "Lose (Enemy)";
+        }
+        yield return new WaitForSeconds(.5f);
+        transform.gameObject.tag = "Card";
     }
 }

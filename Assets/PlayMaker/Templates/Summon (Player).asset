@@ -144,7 +144,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0000010101
-        actionIsOpen: 0000000000
+        actionIsOpen: 0000000001
         actionStartIndex: 00000000030000000a0000001100000019000000
         actionHashCodes: 786b39025552ad055552ad05f6e5be03c064cb04
         unityObjectParams: []
@@ -295,7 +295,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: -0.23
+          value: -5
         - useVariable: 0
           name: 
           tooltip: 
@@ -619,7 +619,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: -2.57
+          value: -12
         - useVariable: 0
           name: 
           tooltip: 
@@ -805,7 +805,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 00000101
-        actionIsOpen: 01000000
+        actionIsOpen: 01000001
         actionStartIndex: 00000000030000000a00000012000000
         actionHashCodes: 786b39025552ad05f6e5be03c064cb04
         unityObjectParams: []
@@ -930,7 +930,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 1.52
+          value: -10
         - useVariable: 0
           name: 
           tooltip: 
@@ -3182,27 +3182,6 @@ MonoBehaviour:
     events:
     - name: Done
       isSystemEvent: 0
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
       isGlobal: 0
     - name: FINISHED
       isSystemEvent: 1

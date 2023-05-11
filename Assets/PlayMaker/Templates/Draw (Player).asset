@@ -494,7 +494,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 01010101
-        actionIsOpen: 01000000
+        actionIsOpen: 01010100
         actionStartIndex: 00000000030000000a00000012000000
         actionHashCodes: 786b39025552ad05f6e5be03c064cb04
         unityObjectParams: []
@@ -506,10 +506,10 @@ MonoBehaviour:
           networkSync: 0
           value: {fileID: 0}
         fsmOwnerDefaultParams:
-        - ownerOption: 1
+        - ownerOption: 0
           gameObject:
-            useVariable: 1
-            name: Card Move Direction (Player)
+            useVariable: 0
+            name: 
             tooltip: 
             showInInspector: 0
             networkSync: 0
@@ -1103,7 +1103,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 0101
-        actionIsOpen: 0000
+        actionIsOpen: 0001
         actionStartIndex: 0000000009000000
         actionHashCodes: 979e4104c064cb04
         unityObjectParams: []
@@ -1768,7 +1768,7 @@ MonoBehaviour:
         - 
         - 
         actionEnabled: 010101010101
-        actionIsOpen: 010000000000
+        actionIsOpen: 010100000000
         actionStartIndex: 00000000030000000a000000120000002d00000030000000
         actionHashCodes: 786b39025552ad05f6e5be03c064cb0448c01101c064cb04
         unityObjectParams: []
@@ -2935,24 +2935,6 @@ MonoBehaviour:
     events:
     - name: Done
       isSystemEvent: 0
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
       isGlobal: 0
     - name: FINISHED
       isSystemEvent: 1
