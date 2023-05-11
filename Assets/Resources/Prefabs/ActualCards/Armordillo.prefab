@@ -427,7 +427,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Draw Card
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -1429,7 +1429,7 @@ MonoBehaviour:
         customNames:
         - 
         - 
-        actionEnabled: 0101
+        actionEnabled: 0000
         actionIsOpen: 0000
         actionStartIndex: 0000000009000000
         actionHashCodes: 979e4104c064cb04
@@ -2857,7 +2857,7 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 000001
+        actionEnabled: 000000
         actionIsOpen: 000001
         actionStartIndex: 00000000050000000c000000
         actionHashCodes: a0dd83035552ad059bd6f801
@@ -3501,7 +3501,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Draw Card
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -4503,7 +4503,7 @@ MonoBehaviour:
         customNames:
         - 
         - 
-        actionEnabled: 0101
+        actionEnabled: 0000
         actionIsOpen: 0000
         actionStartIndex: 0000000009000000
         actionHashCodes: 979e4104c064cb04
@@ -5937,7 +5937,7 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 000101000000
+        actionEnabled: 000100000000
         actionIsOpen: 000101000000
         actionStartIndex: 0000000005000000080000000a000000130000001b000000
         actionHashCodes: a0dd8303786b39029bd6f801979e4104f6e5be0360532301
@@ -6340,24 +6340,6 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
@@ -6574,7 +6556,7 @@ MonoBehaviour:
     manualUpdate: 0
     outVariableIndices: 
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     OutputEvents: []
     RestartOnEnable: 1
@@ -6603,7 +6585,7 @@ MonoBehaviour:
     handleJointBreak2D: 0
     handleOnGUI: 0
     handleFixedUpdate: 0
-    handleLateUpdate: 1
+    handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
     handleLegacyNetworking: 0
@@ -7059,7 +7041,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Lose
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -8430,24 +8412,12 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Done
       isSystemEvent: 0
       isGlobal: 0
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: Move Card
-      isSystemEvent: 0
-      isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Reset
       isSystemEvent: 0
       isGlobal: 1
@@ -10818,7 +10788,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Lose
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -10839,21 +10809,6 @@ MonoBehaviour:
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: Move Card
-      isSystemEvent: 0
-      isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: Move Card
-      isSystemEvent: 0
-      isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
@@ -11140,7 +11095,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Summon Card
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -13585,7 +13540,7 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 000101000000
+        actionEnabled: 000100000000
         actionIsOpen: 000101000000
         actionStartIndex: 0000000005000000080000000a000000130000001b000000
         actionHashCodes: a0dd8303786b39029bd6f801979e4104f6e5be0360532301
@@ -14226,27 +14181,6 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
@@ -14605,7 +14539,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Summon Card
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -17050,7 +16984,7 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 000101000000
+        actionEnabled: 000100000000
         actionIsOpen: 000101000000
         actionStartIndex: 0000000005000000080000000a000000130000001b000000
         actionHashCodes: a0dd8303786b39029bd6f801979e4104f6e5be0360532301
@@ -18398,7 +18332,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Win
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -19769,24 +19703,12 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Done
       isSystemEvent: 0
       isGlobal: 0
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: Move Card
-      isSystemEvent: 0
-      isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Reset
       isSystemEvent: 0
       isGlobal: 1
@@ -19925,7 +19847,7 @@ MonoBehaviour:
     manualUpdate: 0
     outVariableIndices: 
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     OutputEvents: []
     RestartOnEnable: 1
@@ -19954,7 +19876,7 @@ MonoBehaviour:
     handleJointBreak2D: 0
     handleOnGUI: 0
     handleFixedUpdate: 0
-    handleLateUpdate: 1
+    handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
     handleLegacyNetworking: 0
@@ -20410,7 +20332,7 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - Win
-        - Done
+        - 
         byteData: 01
         arrayParamSizes: 
         arrayParamTypes: []
@@ -21781,24 +21703,12 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Done
       isSystemEvent: 0
       isGlobal: 0
     - name: Move Card
       isSystemEvent: 0
       isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: Move Card
-      isSystemEvent: 0
-      isGlobal: 1
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
     - name: Reset
       isSystemEvent: 0
       isGlobal: 1
@@ -21937,7 +21847,7 @@ MonoBehaviour:
     manualUpdate: 0
     outVariableIndices: 
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     OutputEvents: []
     RestartOnEnable: 1
@@ -21966,7 +21876,7 @@ MonoBehaviour:
     handleJointBreak2D: 0
     handleOnGUI: 0
     handleFixedUpdate: 0
-    handleLateUpdate: 1
+    handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
     handleLegacyNetworking: 0
