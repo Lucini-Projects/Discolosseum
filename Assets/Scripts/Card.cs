@@ -134,7 +134,7 @@ public class Card : MonoBehaviour
                 {
                     if (Input.GetMouseButtonDown(0) && canPlay && !deployed && isPlayer1)
                     {
-                        transform.gameObject.tag = "Summoned Card (Player)";
+                        StartCoroutine(Deployed());
                         GameManager.pickMe = true;
                         if (className == "Sovereign")
                         {
@@ -188,7 +188,7 @@ public class Card : MonoBehaviour
     //For the enemy AI
     public void Deploy()
     {
-        transform.gameObject.tag = "Summoned Card (Enemy)";
+        StartCoroutine(Deployed());
         if (className == "Sovereign")
         {
             transform.Find("Shockwave2").GetComponent<Animator>().SetBool("V2 Card Played", true);
@@ -292,6 +292,20 @@ public class Card : MonoBehaviour
         else
         {
             transform.gameObject.tag = "Lose (Enemy)";
+        }
+        yield return new WaitForSeconds(.5f);
+        transform.gameObject.tag = "Card";
+    }
+
+    public IEnumerator Deployed()
+    {
+        if (isPlayer1)
+        {
+            transform.gameObject.tag = "Summoned Card (Player)";
+        }
+        else
+        {
+            transform.gameObject.tag = "Summoned Card (Enemy)";
         }
         yield return new WaitForSeconds(.5f);
         transform.gameObject.tag = "Card";

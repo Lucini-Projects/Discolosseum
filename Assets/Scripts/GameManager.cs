@@ -1003,7 +1003,8 @@ public class GameManager : MonoBehaviour
             if (P1)
             {
                 GameObject newCard = Instantiate(Deck[0], GameObject.FindWithTag("Player1Deck").transform.position, Quaternion.identity);
-                //StartCoroutine(newCard.GetComponent<Card>().Draw());
+                newCard.GetComponent<Card>().isPlayer1 = true;
+                StartCoroutine(newCard.GetComponent<Card>().Draw());
                 Hand.Add(newCard);
                 Deck.Remove(Deck[0]);
                 yield return new WaitForSeconds(.5f);
@@ -1012,13 +1013,14 @@ public class GameManager : MonoBehaviour
             else
             {
                 GameObject newCard = Instantiate(Deck[0], GameObject.FindWithTag("Player2Deck").transform.position, Quaternion.identity);
-                //StartCoroutine(newCard.GetComponent<Card>().Draw());
+                StartCoroutine(newCard.GetComponent<Card>().Draw());
                 Hand.Add(newCard);
                 Deck.Remove(Deck[0]);
                 yield return new WaitForSeconds(.5f);
                 newCard.GetComponent<Card>().AddToHand();
             }
         }
+        yield return new WaitForSeconds(3.0f);
         DistributeCardsinHand();
     }
 
@@ -1046,7 +1048,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(newCard.GetComponent<Card>().Draw());
                 Hand.Add(newCard);
                 Deck.Remove(Deck[0]);
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(.5f);
                 newCard.GetComponent<Card>().AddToHand();
             }
             else
@@ -1055,7 +1057,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(newCard.GetComponent<Card>().Draw());
                 Hand.Add(newCard);
                 Deck.Remove(Deck[0]);
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(.5f);
                 newCard.GetComponent<Card>().AddToHand();
             }
         }
